@@ -1,8 +1,9 @@
-// import 'package:objectbox/objectbox.dart';
+import 'package:objectbox/objectbox.dart';
 
 import 'exercise.dart';
 
-// @Entity()
+@Entity()
+@Sync()
 class Set {
   int id;
   final int? repetitions;

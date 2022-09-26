@@ -1,6 +1,7 @@
-// import 'package:objectbox/objectbox.dart';
+import 'package:objectbox/objectbox.dart';
 
-// @Entity()
+@Entity()
+@Sync()
 class Exercise {
   int? id;
   final String? name;

@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:objectbox/objectbox.dart';
+import 'package:pumping_iron/pages/exercise_list_page.dart';
+import 'package:pumping_iron/pages/workout_page.dart';
+import 'package:pumping_iron/services/objectbox.dart';
 
-void main() {
+import 'models/exercise.dart';
+
+late ObjectBox objectBox;
+
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  objectBox = await ObjectBox.create();
   runApp(const MyApp());
 }
 
