@@ -30,7 +30,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   objectbox: ^1.6.2
-  objectbox_flutter_libs: any
+  objectbox_sync_flutter_libs : any
 
   flutter:
     sdk: flutter

@@ -319,17 +319,17 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.2"
-  objectbox_flutter_libs:
-    dependency: "direct main"
-    description:
-      name: objectbox_flutter_libs
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.6.2"
   objectbox_generator:
     dependency: "direct dev"
     description:
       name: objectbox_generator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.6.2"
+  objectbox_sync_flutter_libs:
+    dependency: "direct main"
+    description:
+      name: objectbox_sync_flutter_libs
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.2"
