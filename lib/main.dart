@@ -5,7 +5,6 @@ import 'package:objectbox/objectbox.dart';
 import 'package:pumping_iron/models/set.dart';
 import 'package:pumping_iron/pages/exercise_list_page.dart';
 import 'package:pumping_iron/pages/workout_page.dart';
-import 'package:pumping_iron/pages/workout_sample_page.dart';
 import 'package:pumping_iron/services/objectbox.dart';
 
 import 'models/exercise.dart';
@@ -74,25 +73,31 @@ class _MyHomePageState extends State<MyHomePage> {
                   }));
                 },
                 child: const Text("To Workout Page (WIP)")),
-            FloatingActionButton(
-                child: Text("Test"),
+            TextButton(
+                onPressed: () {
+                  objectBox.setBox.removeAll();
+                },
+                child: const Text("Clear DB")),
+            TextButton(
                 onPressed: () {
                   List<Set> sets = objectBox.setBox.getAll();
-                  print("Count: ${sets.length}");
-                  // print("Last: ${sets.last!.id}");
-                  // print("Misc: ${sets.last!.date.second}");
-                  Set set = Set(repetitions: 13, date: DateTime.now());
+                  Set set = Set(
+                      exerciseName: 'Bench Press',
+                      repetitions: Random().nextInt(8),
+                      date: DateTime.now());
                   objectBox.setBox.put(set);
-                  
-                  objectBox.setBox.removeAll();
-                }),
-            // TextButton(
-            //     onPressed: () {
-            //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //         return const WorkoutSamplePage(title: 'Workout Page');
-            //       }));
-            //     },
-            //     child: const Text("To Workout Page (WIP)"))
+                },
+                child: const Text("Add Bench Press")),
+            TextButton(
+                onPressed: () {
+                  List<Set> sets = objectBox.setBox.getAll();
+                  Set set = Set(
+                      exerciseName: 'Deadlift',
+                      repetitions: Random().nextInt(6),
+                      date: DateTime.now());
+                  objectBox.setBox.put(set);
+                },
+                child: const Text("Add Deadlift")),
           ],
         ),
       ),

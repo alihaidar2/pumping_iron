@@ -28,8 +28,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
   void initState() {
     super.initState();
     sets = objectBox.setBox.getAll();
-    // streamExercises = objectBox.getExercises();
-    // streamExercises = globals.exerciseList;
   }
 
   @override
@@ -45,66 +43,13 @@ class _WorkoutPageState extends State<WorkoutPage> {
             // objectBox.exerciseBox.putMany(streamExercises);
           // });
           return ListTile(
-            title: Text(sets[index].id.toString() + " - "
-                + sets[index].date.second.toString() + " - "
-                + sets[index].repetitions.toString()),
+            title: Text(
+                    sets[index].exerciseName.toString() + " - " +
+                    sets[index].repetitions.toString() + " Rep(s)  @ "
+                    // there's a way to format this
+                    + sets[index].date.hour.toString() + ":" + sets[index].date.minute.toString() + ":" +sets[index].date.second.toString()
+            ),
           );
-        },
-      ),
-      // body: StreamBuilder<List<Exercise>>(
-      //   stream: streamExercises,
-      //   builder: (context, snapshot) {
-      //     if (!snapshot.hasData) {
-      //       return const Center(
-      //         child: CircularProgressIndicator(),
-      //       );
-      //     } else {
-      //       final exercises = snapshot.data!;
-      //       return ListView.builder(
-      //         itemCount: exercises.length,
-      //         itemBuilder: (context, index) {
-      //           final exercise = exercises[index];
-      //
-      //           return ListTile(
-      //             title: Text(exercise.name!),
-      //             subtitle: Text(exercise.target!),
-      //             // trailing: IconButton(
-      //             //   icon: const Icon(Icons.delete),
-      //             //   onPressed: () => objectBox.deleteExercise(exercise.id!),
-      //             // ),
-      //           );
-      //         },
-      //       );
-      //     }
-      //   },
-      // ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          setState(() {
-            Set newSet = Set(repetitions: 10999, date: DateTime.now());
-            objectBox.setBox.put(newSet);
-            sets = objectBox.setBox.getAll();
-          });
-          // final sett.Set set = sett.Set(repetitions: 4,);
-          // final sett.Set set = Set(4) as sett.Set;
-          // generate list of exercises
-          // final exercise = Exercise(
-          //     name: "Bench Press",
-          //     target: "Chest",
-          //     bodyPart: "Middle Chest",
-          //     equipment: "Barbell and Bench",
-          //     gifUrl: "L"
-          // );
-          // objectBox.exerciseBox.put(exercise);
-          // objectBox.exerciseBox.removeAll();
-
-          // setState(() {
-            // streamExercises = objectBox.getExercises();
-          // });
-
-          // initState();
-          // objectBox.insertExercise(exercise);
         },
       ),
     );
