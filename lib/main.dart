@@ -1,14 +1,18 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
+import 'package:pumping_iron/models/set.dart';
 import 'package:pumping_iron/pages/exercise_list_page.dart';
 import 'package:pumping_iron/pages/workout_page.dart';
+import 'package:pumping_iron/pages/workout_sample_page.dart';
 import 'package:pumping_iron/services/objectbox.dart';
 
 import 'models/exercise.dart';
 
 late ObjectBox objectBox;
 
-Future main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
   runApp(const MyApp());
@@ -32,6 +36,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override
@@ -39,7 +44,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   late String endpoint;
   late Future<List<Exercise>> futureExercises;
 
@@ -54,12 +58,12 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             TextButton(
               // dont need the message, but it is used if you want to return something from that page
-              child: const Text("Next"),
+              child: const Text("List of Exercises from API"),
               onPressed: () async {
                 var message = await Navigator.push(context,
                     MaterialPageRoute(builder: (context) {
-                      return const ExerciseListPage(title: 'Exercise List Page');
-                    }));
+                  return const ExerciseListPage(title: 'Exercise List Page');
+                }));
                 print(message);
               },
             ),
