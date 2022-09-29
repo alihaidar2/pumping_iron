@@ -73,7 +73,26 @@ class _MyHomePageState extends State<MyHomePage> {
                     return const WorkoutPage(title: 'Workout Page');
                   }));
                 },
-                child: const Text("To Database Page"))
+                child: const Text("To Workout Page (WIP)")),
+            FloatingActionButton(
+                child: Text("Test"),
+                onPressed: () {
+                  List<Set> sets = objectBox.setBox.getAll();
+                  print("Count: ${sets.length}");
+                  // print("Last: ${sets.last!.id}");
+                  // print("Misc: ${sets.last!.date.second}");
+                  Set set = Set(repetitions: 13, date: DateTime.now());
+                  objectBox.setBox.put(set);
+                  
+                  objectBox.setBox.removeAll();
+                }),
+            // TextButton(
+            //     onPressed: () {
+            //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //         return const WorkoutSamplePage(title: 'Workout Page');
+            //       }));
+            //     },
+            //     child: const Text("To Workout Page (WIP)"))
           ],
         ),
       ),
