@@ -4,39 +4,62 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:658129015512293571",
-      "lastPropertyId": "6:486059245126040481",
-      "name": "Exercise",
-      "flags": 2,
+      "id": "4:5556306561390569104",
+      "lastPropertyId": "3:1650906018156953232",
+      "name": "Set",
       "properties": [
         {
-          "id": "1:1274146726252656724",
+          "id": "1:8739569359095664345",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:1748644007173850896",
+          "id": "2:264214112287146924",
+          "name": "repetitions",
+          "type": 6
+        },
+        {
+          "id": "3:1650906018156953232",
+          "name": "date",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:5542957906642155572",
+      "lastPropertyId": "6:4637854562634076556",
+      "name": "Exercise",
+      "properties": [
+        {
+          "id": "1:416436984501812623",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8504445299494800586",
           "name": "name",
           "type": 9
         },
         {
-          "id": "3:9215775960355072575",
+          "id": "3:5096844990576401295",
           "name": "target",
           "type": 9
         },
         {
-          "id": "4:1868734573763643329",
+          "id": "4:8764803219866291283",
           "name": "bodyPart",
           "type": 9
         },
         {
-          "id": "5:4345878167843593260",
+          "id": "5:610323052548603806",
           "name": "equipment",
           "type": 9
         },
         {
-          "id": "6:486059245126040481",
+          "id": "6:4637854562634076556",
           "name": "gifUrl",
           "type": 9
         }
@@ -44,35 +67,43 @@
       "relations": []
     },
     {
-      "id": "2:6674796547357999322",
-      "lastPropertyId": "2:5096502320797118806",
-      "name": "Set",
-      "flags": 2,
+      "id": "6:961841792392638427",
+      "lastPropertyId": "1:4750836698139640229",
+      "name": "Workout",
       "properties": [
         {
-          "id": "1:4701210221314884544",
+          "id": "1:4750836698139640229",
           "name": "id",
           "type": 6,
           "flags": 1
-        },
-        {
-          "id": "2:5096502320797118806",
-          "name": "repetitions",
-          "type": 6
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "2:6674796547357999322",
+  "lastEntityId": "6:961841792392638427",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    658129015512293571,
+    6674796547357999322,
+    996443871069670041
+  ],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    1274146726252656724,
+    1748644007173850896,
+    9215775960355072575,
+    1868734573763643329,
+    4345878167843593260,
+    486059245126040481,
+    4701210221314884544,
+    5096502320797118806,
+    916299560753839574
+  ],
   "retiredRelationUids": [],
   "version": 1
 }
