@@ -8,6 +8,7 @@ import 'package:pumping_iron/pages/workout_page.dart';
 import 'package:pumping_iron/services/objectbox.dart';
 
 import 'models/exercise.dart';
+import 'pages/test_page.dart';
 
 late ObjectBox objectBox;
 
@@ -74,30 +75,38 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 child: const Text("To Workout Page (WIP)")),
             TextButton(
-                onPressed: () {
-                  objectBox.setBox.removeAll();
-                },
+                onPressed: null,//() {
+                  // objectBox.setBox.removeAll();
+                // },
                 child: const Text("Clear DB")),
             TextButton(
-                onPressed: () {
-                  List<Set> sets = objectBox.setBox.getAll();
-                  Set set = Set(
-                      exerciseName: 'Bench Press',
-                      repetitions: Random().nextInt(8),
-                      date: DateTime.now());
-                  objectBox.setBox.put(set);
-                },
+                onPressed: null,
+                //     () {
+                //   List<Set> sets = objectBox.setBox.getAll();
+                //   Set set = Set(
+                //       exerciseName: 'Bench Press',
+                //       repetitions: Random().nextInt(8),
+                //       date: DateTime.now());
+                //   objectBox.setBox.put(set);
+                // },
                 child: const Text("Add Bench Press")),
             TextButton(
-                onPressed: () {
-                  List<Set> sets = objectBox.setBox.getAll();
-                  Set set = Set(
-                      exerciseName: 'Deadlift',
-                      repetitions: Random().nextInt(6),
-                      date: DateTime.now());
-                  objectBox.setBox.put(set);
-                },
+                onPressed: null, // () {
+                // List<Set> sets = objectBox.setBox.getAll();
+                // Set set = Set(
+                //     exerciseName: 'Deadlift',
+                //     repetitions: Random().nextInt(6),
+                //     date: DateTime.now());
+                // objectBox.setBox.put(set);
+                // },
                 child: const Text("Add Deadlift")),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const TestPage(title: 'Workout Page');
+                  }));
+                },
+                child: const Text("Go to Workout Card Page")),
           ],
         ),
       ),
