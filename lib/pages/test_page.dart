@@ -41,19 +41,15 @@ class _TestPageState extends State<TestPage> {
         title: Text(widget.title),
       ),
       body: ListView.builder(
-        itemCount: 1,
+        itemCount: exerciseNames.length,
         itemBuilder: (context, index) {
-          return ExerciseEntry(name: 'Bench Press');
+          return ExerciseEntry(name: exerciseNames.elementAt(index));
         },
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          // Query<Set> query = objectBox.setBox.query(Set_.exerciseName.equals("Bench Press")).build();
-          // setState(() {
-          //   sets = query.find();
-          // });
-          // query.close();
+
         },
 
       ),
