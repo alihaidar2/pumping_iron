@@ -29,7 +29,12 @@ class _TestPageState extends State<TestPage> {
   @override
   Widget build(BuildContext context) {
     // query to return sets grouped by name
-    
+    PropertyQuery<String> query = objectBox.setBox
+        .query().build()
+        .property(Set_.exerciseName);
+    query.distinct = true;
+
+    List<String> exerciseNames = query.find();
 
     return Scaffold(
       appBar: AppBar(
