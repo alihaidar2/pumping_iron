@@ -8,8 +8,7 @@ import '../main.dart';
 import '../models/exercise.dart';
 import '../models/set.dart';
 import '../globals.dart' as globals;
-
-// import 'package:pump_that_iron/objectbox.g.dart';
+import '../objectbox.g.dart';
 
 class TestPage extends StatefulWidget {
   const TestPage({Key? key, required this.title}) : super(key: key);
@@ -20,6 +19,8 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
+  late List<Set> sets;
+
   @override
   void initState() {
     super.initState();
@@ -27,6 +28,9 @@ class _TestPageState extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
+    // query to return sets grouped by name
+    
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -34,8 +38,19 @@ class _TestPageState extends State<TestPage> {
       body: ListView.builder(
         itemCount: 1,
         itemBuilder: (context, index) {
-          return ExerciseEntry();
+          return ExerciseEntry(name: 'Bench Press');
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          // Query<Set> query = objectBox.setBox.query(Set_.exerciseName.equals("Bench Press")).build();
+          // setState(() {
+          //   sets = query.find();
+          // });
+          // query.close();
+        },
+
       ),
     );
   }
