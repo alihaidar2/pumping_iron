@@ -31,13 +31,19 @@ class _ExerciseEntryState extends State<ExerciseEntry> {
   @override
   void initState() {
     super.initState();
-    sets = objectBox.setBox.query(Set_.exerciseName.equals(widget.name)).build().find();
+    sets = objectBox.setBox
+        .query(Set_.exerciseName.equals(widget.name))
+        .build()
+        .find();
   }
 
   @override
   Widget build(BuildContext context) {
     setState(() {
-      sets = objectBox.setBox.query(Set_.exerciseName.equals(widget.name)).build().find();
+      sets = objectBox.setBox
+          .query(Set_.exerciseName.equals(widget.name))
+          .build()
+          .find();
     });
     return Card(
       child: Padding(
@@ -48,16 +54,20 @@ class _ExerciseEntryState extends State<ExerciseEntry> {
               child: Row(
                 // crossAxisAlignment: CrossAxisAlignment.start, // for left side
                 children: [
-                  Text(
-                    widget.name!,
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15),
+                  // Exercise name
+                  Expanded(
+                    child: Text(
+                      widget.name!,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    ),
                   ),
                   const VerticalDivider(
-                    width: 75.0,
+                    width: 1.0,
                   ),
+                  // Exercise sets
                   Expanded(
                     child: Center(
                       child: ListView.builder(
@@ -66,7 +76,8 @@ class _ExerciseEntryState extends State<ExerciseEntry> {
                           // number of sets belonging to an Exercise
                           itemBuilder: (context, index) {
                             // return Text("Set ${index + 1} :  ${index + 7} rep(s) ");
-                            return Text("Set ${index + 1} : ${sets.elementAt(index).repetitions} rep(s) ");
+                            return Text(
+                                "Set ${index + 1} : ${sets.elementAt(index).repetitions} rep(s) ");
                           }),
                     ),
                   ),

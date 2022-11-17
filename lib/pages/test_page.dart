@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pumping_iron/widgets/ExerciseEntry.dart';
@@ -33,23 +35,39 @@ class _TestPageState extends State<TestPage> {
         .query().build()
         .property(Set_.exerciseName);
     query.distinct = true;
-
     List<String> exerciseNames = query.find();
+
+
 
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: ListView.builder(
-        itemCount: exerciseNames.length,
-        itemBuilder: (context, index) {
-          return ExerciseEntry(name: exerciseNames.elementAt(index));
-        },
+      body: Column(
+        children: [
+          Text("Date"),
+          Expanded(
+            child: ListView.builder(
+              itemCount: exerciseNames.length,
+              itemBuilder: (context, index) {
+                return ExerciseEntry(name: exerciseNames.elementAt(index));
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
+          List<Set> sets = objectBox.setBox.getAll();
+          Set set = Set(
+              exerciseName: 'Deadlift',
+              repetitions: Random().nextInt(6),
+              date: DateTime.now());
+          objectBox.setBox.put(set);
+          setState(() {
 
+          });
         },
 
       ),

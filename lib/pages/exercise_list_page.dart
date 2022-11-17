@@ -7,7 +7,6 @@ import '../services/api_service.dart';
 import '../widgets/ExerciseRow.dart';
 import '../globals.dart' as globals;
 
-
 class ExerciseListPage extends StatefulWidget {
   const ExerciseListPage({Key? key, required this.title}) : super(key: key);
   final String title;
@@ -48,11 +47,10 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: ListView(
         children: [
+          // const Text("Exercises", style: TextStyle(backgroundColor: Colors.teal, fontSize: 30, fontWeight: FontWeight.bold)),
+          // Child 1 : Drowpdown
           SizedBox(
             height: 40,
             child: Align(
@@ -78,9 +76,9 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
                   if (snapshot.data!.length > 1000) {
                     globals.exerciseList = snapshot.data!;
                   }
-                  setState(() {
-                    // objectBox.exerciseBox.putMany(snapshot.data!.sublist(0,10));
-                  });
+                  // setState(() {
+                  // objectBox.exerciseBox.putMany(snapshot.data!.sublist(0,10));
+                  // });
 
                   return ListView.builder(
                       physics: const ScrollPhysics(),
