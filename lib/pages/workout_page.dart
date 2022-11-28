@@ -1,14 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:pump_that_iron/models/set.dart' as sett;
-// import 'package:pump_that_iron/globals.dart' as globals;
 
 import '../main.dart';
 import '../models/exercise.dart';
 import '../models/set.dart';
 import '../globals.dart' as globals;
-
-// import 'package:pump_that_iron/objectbox.g.dart';
 
 class WorkoutPage extends StatefulWidget {
   const WorkoutPage({Key? key, required this.title}) : super(key: key);
@@ -21,8 +17,6 @@ class WorkoutPage extends StatefulWidget {
 class _WorkoutPageState extends State<WorkoutPage> {
   late List<Exercise> streamExercises;
   late List<Set> sets;
-  // change this to streamSets
-  // late List<Exercise> streamExercises;
 
   @override
   void initState() {
@@ -39,17 +33,16 @@ class _WorkoutPageState extends State<WorkoutPage> {
       body: ListView.builder(
         itemCount: sets.length,
         itemBuilder: (context, index) {
-          // setState(() {
-            // objectBox.exerciseBox.putMany(streamExercises);
-          // });
-          return ListTile(
-            title: Text(
-                    sets[index].exerciseName.toString() + " - " +
-                    sets[index].repetitions.toString() + " Rep(s)  @ "
-                    // there's a way to format this
-                    + sets[index].date.hour.toString() + ":" + sets[index].date.minute.toString() + ":" +sets[index].date.second.toString()
+          return Card(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Text("Set: ${sets[index].date.day}"),
             ),
           );
+          //   ListTile(
+          //   title: Text(
+          //       "${sets[index].date.day}/${sets[index].date.month} ${sets.length} ${sets[index].id} - ${sets[index].exerciseName} - ${sets[index].repetitions} Rep(s)  @ ${sets[index].date.hour}:${sets[index].date.minute}:${sets[index].date.second}"),
+          // );
         },
       ),
     );

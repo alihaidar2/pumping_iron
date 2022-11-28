@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Pumping Iron',
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
@@ -95,31 +95,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      // create bottom navigation bar
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.list),
-      //       label: 'Exercises',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.whatshot),
-      //       label: 'Home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.calendar_today),
-      //       label: 'Workouts',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.face_outlined),
-      //       label: 'Test2',
-      //     ),
-      //   ],
-      //   currentIndex: 0,
-      //   selectedItemColor: Colors.red,
-      //   unselectedItemColor: Colors.grey,
-      //   onTap: _onItemTapped,
-      // ),
     );
   }
 

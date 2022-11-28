@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pumping_iron/pages/test_page.dart';
+import 'package:pumping_iron/pages/workout_list_page.dart';
 import 'package:pumping_iron/pages/workout_page.dart';
 import 'package:pumping_iron/widgets/ExerciseEntry.dart';
 
@@ -31,7 +32,8 @@ class _HomePageState extends State<HomePage> {
   // create static list of 8 Widgets
   static List<Widget> _widgetOptions = <Widget>[
     TestPage(title: 'Test'),
-    WorkoutPage(title: 'Workout'),
+    WorkoutListPage(),
+    // WorkoutPage(title: 'Workout'),
     ExerciseListPage(title: 'Exercises'),
   ];
 
