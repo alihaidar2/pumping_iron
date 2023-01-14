@@ -31,6 +31,8 @@ environment:
 dependencies:
   objectbox: ^1.6.2
   objectbox_sync_flutter_libs : any
+  collection: ^1.14.13
+
 
   flutter:
     sdk: flutter

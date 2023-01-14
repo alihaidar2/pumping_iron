@@ -1,7 +1,12 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pumping_iron/pages/test_page.dart';
+import 'package:pumping_iron/pages/workout_page.dart';
 import '../main.dart';
 import '../models/set.dart';
 import 'package:flutter/material.dart';
+
+import '../objectbox.g.dart';
 
 class WorkoutListPage extends StatefulWidget {
   const WorkoutListPage({Key? key}) : super(key: key);
@@ -11,33 +16,23 @@ class WorkoutListPage extends StatefulWidget {
 }
 
 class _WorkoutListPageState extends State<WorkoutListPage> {
+  late String title;
   late List<Set> sets;
   late List<Set> sets1;
   late List<Set> sets2;
   late List<Set> sets3;
   late List<List<Set>> setDates;
+  late List<String> days;
+  late var dates;
 
   @override
   void initState() {
     super.initState();
-    sets = objectBox.setBox.getAll();
+    title = "Workout Dates";
+    sets = objectBox.setBox.query().build().find().toList();
 
-    sets1 = sets
-        .where((element) => element.date.month == 11)
-        .where((element) => element.date.day == 1)
-        .toList();
-    sets2 = sets
-        .where((element) => element.date.month == 11)
-        .where((element) => element.date.day == 16)
-        .toList();
-    sets3 = sets
-        .where((element) => element.date.month == 11)
-        .where((element) => element.date.day == 22)
-        .toList();
-
-    setDates = [sets1, sets2, sets3];
-
-    print('');
+    // get a list of all dates, grouped by day
+    dates = groupSetsByDate(sets);
   }
 
   @override
@@ -45,33 +40,42 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
     // ListView of setDates
     return Scaffold(
       appBar: AppBar(
-        title: Text('Workout Dates'),
+        title: Text(title),
       ),
       body: ListView.builder(
-        itemCount: setDates.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: InkWell(
+          itemCount: dates.length,
+          itemBuilder: (BuildContext context, int index) {
+            var date = dates.elementAt(index);
+            return ListTile(
+              title: Text(cleanDate(date)),
+              trailing: Icon(Icons.keyboard_arrow_right_sharp),
+              //onTap calls When ListTile Taps
               onTap: () {
-                print(setDates.elementAt(index).elementAt(0).date.day.toString()+"/"
-                  +setDates.elementAt(index).elementAt(0).date.month.toString());
-
-                // TODO: Navigate to a new page with the sets for that date
-                // Navigator.pushNamed(context, '/workout',
-                //     arguments: setDates.elementAt(index));
+                // Navigator pushes Workout for that date.
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WorkoutPage(title: title, year: date.year, month: date.month, day: date.day),
+                  ),
+                );
               },
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Text("Date: ${setDates[index][0].date.day}/${setDates[index][0].date.month}"),
-              ),
-            ),
-          );
-          return ListTile(
-              title: Text("Date: ${setDates[index][0].date.day}"),);
-        },
-      ),
+            );
+          }),
     );
 
     return Container();
   }
+
+  Iterable<DateTime> groupSetsByDate(List<Set> sets) {
+    final dates = groupBy(sets, (Set s) {
+      return s.date;
+    });
+
+    return dates.keys;
+  }
+
+  String cleanDate(DateTime date) {
+    return date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString();
+  }
+
 }

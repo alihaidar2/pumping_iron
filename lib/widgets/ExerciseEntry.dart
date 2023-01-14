@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pumping_iron/models/set.dart';
@@ -18,8 +19,12 @@ extension StringCasingExtension on String {
 
 class ExerciseEntry extends StatefulWidget {
   final String name;
+  final int year;
+  final int month;
+  final int day;
 
-  ExerciseEntry({required this.name});
+
+  ExerciseEntry({required this.name, required this.year,required this.month,required this.day});
 
   @override
   State<ExerciseEntry> createState() => _ExerciseEntryState();
@@ -27,24 +32,29 @@ class ExerciseEntry extends StatefulWidget {
 
 class _ExerciseEntryState extends State<ExerciseEntry> {
   List<Set> sets = [];
+  late var exercises;
+
 
   @override
   void initState() {
     super.initState();
-    sets = objectBox.setBox
-        .query(Set_.exerciseName.equals(widget.name))
-        .build()
-        .find();
+
+    sets = objectBox.setBox.query().build().find().toList();
+    sets = sets.where((element) => element.exerciseName == widget.name && element.date.year == widget.year && element.date.month == widget.month && element.date.day == widget.day).toList();
+    // have to do it for a certain name
+
+    // todaySets gets you all the sets of every exercise
+    // I need to group each exercise with its sets
+
+    // list of sets for a single exercise
+    exercises = groupSetsByExerciseName(sets);
+
+    print("object");
+
   }
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      sets = objectBox.setBox
-          .query(Set_.exerciseName.equals(widget.name))
-          .build()
-          .find();
-    });
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(15),
@@ -75,7 +85,6 @@ class _ExerciseEntryState extends State<ExerciseEntry> {
                           itemCount: sets.length,
                           // number of sets belonging to an Exercise
                           itemBuilder: (context, index) {
-                            // return Text("Set ${index + 1} :  ${index + 7} rep(s) ");
                             return Text(
                                 "Set ${index + 1} : ${sets.elementAt(index).repetitions} rep(s) ");
                           }),
@@ -90,4 +99,13 @@ class _ExerciseEntryState extends State<ExerciseEntry> {
       ),
     );
   }
+
+  Iterable<String> groupSetsByExerciseName(List<Set> sets) {
+    final dates = groupBy(sets, (Set s) {
+      return s.exerciseName;
+    });
+
+    return dates.keys;
+  }
+
 }

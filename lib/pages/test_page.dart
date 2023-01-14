@@ -16,6 +16,7 @@ class TestPage extends StatefulWidget {
   const TestPage({Key? key, required this.title}) : super(key: key);
   final String title;
 
+
   @override
   State<TestPage> createState() => _TestPageState();
 }
@@ -30,47 +31,6 @@ class _TestPageState extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
-    // query to return sets grouped by name
-    PropertyQuery<String> query = objectBox.setBox
-        .query().build()
-        .property(Set_.exerciseName);
-    query.distinct = true;
-    List<String> exerciseNames = query.find();
-
-
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Column(
-        children: [
-          Text("Date"),
-          Expanded(
-            child: ListView.builder(
-              itemCount: exerciseNames.length,
-              itemBuilder: (context, index) {
-                return ExerciseEntry(name: exerciseNames.elementAt(index));
-              },
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          List<Set> sets = objectBox.setBox.getAll();
-          Set set = Set(
-              exerciseName: 'Deadlift',
-              repetitions: Random().nextInt(6),
-              date: DateTime.now());
-          objectBox.setBox.put(set);
-          setState(() {
-
-          });
-        },
-
-      ),
-    );
+      return Text("TEST");
   }
 }

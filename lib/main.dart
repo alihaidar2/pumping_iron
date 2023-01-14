@@ -90,7 +90,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => const HomePage()),
                 );
               },
-              child: const Text('Begin'),
+              // make the text purple
+              child: const Text(
+                "Begin",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 20),
+              ),
             ),
           ],
         ),
@@ -124,7 +131,7 @@ class MainPage extends StatelessWidget {
         TextButton(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const WorkoutPage(title: 'Workout Page');
+                return const WorkoutPage(title: 'Workout Page', year: 0, month: 0, day: 0);
               }));
             },
             child: const Text("To Workout Page (WIP)")),
