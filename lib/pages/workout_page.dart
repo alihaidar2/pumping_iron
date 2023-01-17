@@ -35,8 +35,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
     // filter to the sets for the day
     sets = sets.where((element) => element.date.year == widget.year && element.date.month == widget.month && element.date.day == widget.day).toList();
     exerciseNames = groupSetsByExercises(sets);
-
-
   }
 
   @override
@@ -68,6 +66,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
               repetitions: Random().nextInt(6),
               date: DateTime.now());
           objectBox.setBox.put(set);
+          // sets = sets.where((element) => element.date.year == widget.year && element.date.month == widget.month && element.date.day == widget.day).toList();
           setState(() {
           });
         },

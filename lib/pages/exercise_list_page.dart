@@ -17,8 +17,10 @@ class ExerciseListPage extends StatefulWidget {
 
 class _ExerciseListPageState extends State<ExerciseListPage> {
   late Future<List<Exercise>> futureExercises;
-  late Future<List<String>> futureTargets;
+
+  // late Future<List<String>> futureTargets;
   late String endpoint;
+  late List<Exercise> exercises;
   String dropdownValue = 'Filter exercises by...';
 
   @override
@@ -28,83 +30,60 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
     ApiService apiService = ApiService();
     endpoint = 'exercises';
     futureExercises = apiService.get(endpoint: endpoint);
+
+    exercises = objectBox.getAllExercises();
   }
 
   void updateList(String? newValue) {
     dropdownValue = newValue!;
     switch (newValue) {
       case 'Filter exercises by...':
-        endpoint = 'exercises';
         break;
       default:
-        endpoint = 'exercises/target/' + dropdownValue;
+        exercises = objectBox.getExercisesByTarget(newValue);
         break;
     }
-    ApiService apiService = ApiService();
-    futureExercises = apiService.get(endpoint: endpoint);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          // const Text("Exercises", style: TextStyle(backgroundColor: Colors.teal, fontSize: 30, fontWeight: FontWeight.bold)),
-          // Child 1 : Drowpdown
-          SizedBox(
-            height: 40,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: DropdownButton<String>(
-                value: dropdownValue,
-                icon: const Icon(Icons.arrow_downward),
-                elevation: 16,
-                style: const TextStyle(color: Colors.blue),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    updateList(newValue);
-                  });
-                },
-                items: getTargets(),
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: ListView(
+          children: [
+            SizedBox(
+              height: 40,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: DropdownButton<String>(
+                  value: dropdownValue,
+                  icon: const Icon(Icons.arrow_downward),
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.blue),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      updateList(newValue);
+                    });
+                  },
+                  items: getTargets(),
+                ),
               ),
             ),
-          ),
-          FutureBuilder<List<Exercise>>(
-              future: futureExercises,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data!.length > 1000) {
-                    globals.exerciseList = snapshot.data!;
-                  }
-                  // setState(() {
-                  // objectBox.exerciseBox.putMany(snapshot.data!.sublist(0,10));
-                  // });
-
-                  return ListView.builder(
-                      physics: const ScrollPhysics(),
-                      shrinkWrap: true,
-                      // itemCount: 20,
-                      itemCount: snapshot.data!.length > 20
-                          ? 20
-                          : snapshot.data!.length,
-                      // this would be come the length of the list with the data
-                      itemBuilder: (context, i) {
-                        Exercise element = snapshot.data!.elementAt(i);
-                        return ExerciseRow(
-                            element.name, element.target, element.gifUrl);
-                      });
-                } else if (snapshot.hasError) {
-                  return const Text("Error buddy");
-                }
-                return const Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              }),
-        ],
-      ),
-      // ),
+            ListView.builder(
+                physics: const ScrollPhysics(),
+                shrinkWrap: true,
+                // itemCount: 20,
+                itemCount: exercises.length > 20 ? 20 : exercises.length,
+                // this would be come the length of the list with the data
+                itemBuilder: (context, i) {
+                  Exercise element = exercises.elementAt(i);
+                  return ExerciseRow(
+                      element.name, element.target, element.gifUrl);
+                }),
+          ],
+        )
     );
   }
 }

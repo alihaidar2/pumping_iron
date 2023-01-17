@@ -29,7 +29,10 @@ class MyApp extends StatelessWidget {
       title: 'Pumping Iron',
       theme: ThemeData(
         primarySwatch: Colors.teal,
-      ),
+        textButtonTheme: TextButtonThemeData(
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.resolveWith(
+                      (state) => Colors.white)))),
       home: const MyHomePage(title: 'Pumping Iron'),
     );
   }

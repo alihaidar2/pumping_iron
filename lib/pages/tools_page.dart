@@ -15,6 +15,7 @@ import '../models/exercise.dart';
 import '../models/set.dart';
 import '../globals.dart' as globals;
 import '../objectbox.g.dart';
+import '../services/api_service.dart';
 
 class ToolsPage extends StatefulWidget {
   const ToolsPage({Key? key, required this.title}) : super(key: key);
@@ -50,43 +51,58 @@ class _ToolsPageState extends State<ToolsPage> {
           children: [
             Expanded(
               child: ListView(
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      deleteAllSets();
-                    },
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
-                            ),
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                // for left side
-                                children: [
-                                  Text(
-                                    "Delete all sets",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15),
-                                  ),
-                                ],
-                                // ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                padding: const EdgeInsets.all(5),
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 2.5),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.grey[500],
                     ),
+                    child: Center(
+                        child: TextButton(
+                            child: Text('Delete All Sets'),
+                            onPressed: deleteAllSets)),
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: ElevatedButton(
+                  Container(
+                    margin: const EdgeInsets.only(top: 2.5, bottom: 2.5),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.grey[400],
+                    ),
+                    child: Center(
+                        child: TextButton(
+                            child: Text('Delete Selected Sets'),
+                            onPressed: deleteSelectedSets)),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(
+                      top: 2.5,
+                      bottom: 2.5,
+                    ),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.grey[500],
+                    ),
+                    // color: Colors.grey[500],
+                    child: Center(
+                        child: TextButton(
+                            child: Text('Add Sample Sets'),
+                            onPressed: addSampleSets)),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 2.5, bottom: 2.5),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.grey[400],
+                    ),
+                    child: Center(
+                        child: TextButton(
+                      child: Text('Add a Set'),
                       onPressed: () {
                         showDialog(
                             context: context,
@@ -102,7 +118,7 @@ class _ToolsPageState extends State<ToolsPage> {
                                         onTap: () {
                                           Navigator.of(context).pop();
                                         },
-                                        child: CircleAvatar(
+                                        child: const CircleAvatar(
                                           child: Icon(Icons.close),
                                           backgroundColor: Colors.red,
                                         ),
@@ -114,20 +130,20 @@ class _ToolsPageState extends State<ToolsPage> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
                                           Padding(
-                                            padding: EdgeInsets.all(8.0),
+                                            padding: const EdgeInsets.all(8.0),
                                             child: TextFormField(
                                               controller: exerciseController,
-                                              decoration: new InputDecoration(
+                                              decoration: const InputDecoration(
                                                   labelText:
                                                       "What is the name of the exercise?"),
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.all(8.0),
+                                            padding: const EdgeInsets.all(8.0),
                                             child: TextFormField(
                                               controller: setController,
-                                              decoration: new InputDecoration(
-                                                  labelText: "How many sets?"),
+                                              decoration: const InputDecoration(
+                                                  labelText: "How many reps?"),
                                               keyboardType:
                                                   TextInputType.number,
                                               inputFormatters: <
@@ -143,7 +159,7 @@ class _ToolsPageState extends State<ToolsPage> {
                                                 children: [
                                                   Expanded(
                                                     child: ListTile(
-                                                      title: Text(''),
+                                                      title: const Text(''),
                                                       subtitle: TextFormField(
                                                         controller:
                                                             dayController,
@@ -155,7 +171,7 @@ class _ToolsPageState extends State<ToolsPage> {
                                                   ),
                                                   Expanded(
                                                     child: ListTile(
-                                                      title: Text(''),
+                                                      title: const Text(''),
                                                       subtitle: TextFormField(
                                                         controller:
                                                             monthController,
@@ -167,7 +183,7 @@ class _ToolsPageState extends State<ToolsPage> {
                                                   ),
                                                   Expanded(
                                                     child: ListTile(
-                                                      title: Text(''),
+                                                      title: const Text(''),
                                                       subtitle: TextFormField(
                                                         controller:
                                                             yearController,
@@ -185,7 +201,7 @@ class _ToolsPageState extends State<ToolsPage> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: ElevatedButton(
-                                              child: Text("Submit"),
+                                              child: const Text("Submit"),
                                               onPressed: () {
                                                 addSet(
                                                     exerciseController.text,
@@ -210,12 +226,20 @@ class _ToolsPageState extends State<ToolsPage> {
                               );
                             });
                       },
-                      child: Text("Add a set"),
-                    ),
+                    )),
                   ),
-                  // Center(
-                  //   child: ,
-                  // ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 2.5,bottom: 2.5,),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.grey[500],
+                    ),
+                    child: Center(
+                        child: TextButton(
+                            child: Text('Pull Exercises to Database'),
+                            onPressed: pullExercisesToDatabase)),
+                  ),
                 ],
               ),
             ),
@@ -228,11 +252,84 @@ class _ToolsPageState extends State<ToolsPage> {
     objectBox.setBox.removeAll();
   }
 
+  void deleteSelectedSets() {
+    Query<Set> query = objectBox.setBox
+        .query(
+          Set_.exerciseName.equals("Deadlift"),
+        )
+        .build();
+    List<Set> sets = query.find();
+    for (Set set in sets) {
+      objectBox.setBox.remove(set.id);
+    }
+  }
+
+  void addSampleSets() {
+    for (int i = 0; i < 4; i++) {
+      Set set = Set(
+          exerciseName: "Deadlift",
+          repetitions: Random().nextInt(6),
+          date: new DateTime(2012, 2, 27));
+      objectBox.setBox.put(set);
+    }
+    for (int i = 0; i < 4; i++) {
+      Set set = Set(
+          exerciseName: "Pullups",
+          repetitions: Random().nextInt(6),
+          date: new DateTime(2012, 2, 27));
+      objectBox.setBox.put(set);
+    }
+    for (int i = 0; i < 4; i++) {
+      Set set = Set(
+          exerciseName: "Bench Press",
+          repetitions: Random().nextInt(6),
+          date: new DateTime(2012, 2, 28));
+      objectBox.setBox.put(set);
+    }
+    for (int i = 0; i < 4; i++) {
+      Set set = Set(
+          exerciseName: "Incline DB Press",
+          repetitions: Random().nextInt(6),
+          date: new DateTime(2012, 2, 28));
+      objectBox.setBox.put(set);
+    }
+    for (int i = 0; i < 4; i++) {
+      Set set = Set(
+          exerciseName: "Squat",
+          repetitions: Random().nextInt(6),
+          date: new DateTime(2012, 2, 28));
+      objectBox.setBox.put(set);
+    }
+    for (int i = 0; i < 4; i++) {
+      Set set = Set(
+          exerciseName: "Leg Extensions",
+          repetitions: Random().nextInt(6),
+          date: new DateTime(2012, 2, 28));
+      objectBox.setBox.put(set);
+    }
+
+    var box = objectBox.exerciseBox.getAll();
+    print('object');
+
+  }
+
   //implement a function to add a set to the database
   void addSet(String exercise, int reps, int year, int month, int day) {
     // create a new set
     DateTime date = DateTime(year, month, day);
     Set newSet = new Set(exerciseName: exercise, repetitions: reps, date: date);
     objectBox.setBox.put(newSet);
+  }
+
+  Future<void> pullExercisesToDatabase() async {
+    ApiService apiService = ApiService();
+    String endpoint = 'exercises';
+    var futureExercises = apiService.get(endpoint: endpoint);
+    List<Exercise> list = await futureExercises;
+    for (Exercise exercise in list) {
+      objectBox.exerciseBox.put(exercise);
+    }
+    // objectBox.exerciseBox.putMany(list.toList());
+    print('object');
   }
 }

@@ -41,15 +41,9 @@ class _ExerciseEntryState extends State<ExerciseEntry> {
 
     sets = objectBox.setBox.query().build().find().toList();
     sets = sets.where((element) => element.exerciseName == widget.name && element.date.year == widget.year && element.date.month == widget.month && element.date.day == widget.day).toList();
-    // have to do it for a certain name
-
-    // todaySets gets you all the sets of every exercise
-    // I need to group each exercise with its sets
 
     // list of sets for a single exercise
     exercises = groupSetsByExerciseName(sets);
-
-    print("object");
 
   }
 
@@ -74,9 +68,7 @@ class _ExerciseEntryState extends State<ExerciseEntry> {
                           fontSize: 15),
                     ),
                   ),
-                  const VerticalDivider(
-                    width: 1.0,
-                  ),
+                  const VerticalDivider(width: 1.0),
                   // Exercise sets
                   Expanded(
                     child: Center(

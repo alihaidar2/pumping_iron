@@ -68,6 +68,10 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
 
   Iterable<DateTime> groupSetsByDate(List<Set> sets) {
     final dates = groupBy(sets, (Set s) {
+      // this needs to group by day month and year not just date
+      // I'll just have to reform the date
+
+      // create date from sd.date.day
       return s.date;
     });
 

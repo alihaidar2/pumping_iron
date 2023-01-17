@@ -21,7 +21,7 @@ class Exercise {
 
   factory Exercise.fromJson(Map<String, dynamic> json) {
     return Exercise(
-        id: int.tryParse(json['id'].toString()),
+        // id: int.tryParse(json['id'].toString()),
         name: json["name"].toString(),
         target: json["target"].toString(),
         bodyPart: json["bodyPart"].toString(),

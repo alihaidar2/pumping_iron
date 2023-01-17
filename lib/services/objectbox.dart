@@ -15,6 +15,7 @@ class ObjectBox {
   late final Store store;
 
   late final Box<Set> setBox; // holds all the sets ever --> filter by date
+  late final Box<Exercise> exerciseBox; // holds all the sets ever --> filter by date
   late final Box<Workout> workoutBox;
   // late final Box<Exercise> exerciseBox;
 
@@ -22,6 +23,7 @@ class ObjectBox {
 
   ObjectBox._create(this.store) {
     setBox = Box<Set>(store);
+    exerciseBox = Box<Exercise>(store);
     workoutBox = Box<Workout>(store);
     // exerciseBox = Box<Exercise>(store);
 
@@ -39,6 +41,16 @@ class ObjectBox {
 
   List<Set> getSets() {
     return setBox.getAll();
+  }
+
+  List<Exercise> getAllExercises() {
+    return exerciseBox.getAll();
+  }
+
+  List<Exercise> getExercisesByTarget(String newValue) {
+    Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.target.equals(newValue)).build();
+
+    return query.find();
   }
 
   // List<Exercise> getExercises() {return exerciseBox.getAll();}
