@@ -41,7 +41,8 @@ class _ExerciseEntryState extends State<ExerciseEntry> {
 
     // gets all sets for a single exercise
     sets = objectBox.setBox.query().build().find().toList();
-    sets = sets.where((element) => element.id == objectBox.getExerciseByName(widget.name).id && element.date.year == widget.year && element.date.month == widget.month && element.date.day == widget.day).toList();
+    String exerciseName = widget.name;
+    sets = sets.where((element) => element.exerciseId == objectBox.getExerciseByName(widget.name).id && element.date.year == widget.year && element.date.month == widget.month && element.date.day == widget.day).toList();
 
     // list of sets for a single exercise
     exercises = groupSetsByExerciseName(sets);

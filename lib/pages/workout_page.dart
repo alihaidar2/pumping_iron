@@ -24,7 +24,7 @@ class WorkoutPage extends StatefulWidget {
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
-  late List<String> exerciseNames;
+  late List<String?> exerciseNames;
   late List<Set> sets;
 
   @override
@@ -34,8 +34,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
     // filter to the sets for the day
     sets = sets.where((element) => element.date.year == widget.year && element.date.month == widget.month && element.date.day == widget.day).toList();
-    // exerciseNames = groupSetsByExercises(sets);
-    exerciseNames = ['Deadlift', 'Pullups'];
+    exerciseNames = groupSetsByExercises(sets);
+    // exerciseNames = ['Deadlift', 'Pullups'];
   }
 
   @override
@@ -53,7 +53,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
               // itemCount: exerciseNames.length,
               itemCount: 2,
               itemBuilder: (context, index) {
-                return ExerciseEntry(name: exerciseNames[index], year: widget.year, month: widget.month, day: widget.day);
+                return ExerciseEntry(name: exerciseNames[index]!, year: widget.year, month: widget.month, day: widget.day);
               },
             ),
           ),
@@ -78,12 +78,14 @@ class _WorkoutPageState extends State<WorkoutPage> {
   }
 
   // this isnt gonna exist anymore -- wont need to
-  // List<String> groupSetsByExercises(List<Set> sets) {
-  //   final exercises = groupBy(sets, (Set s) {
-  //     return s.exerciseName;
-  //   });
-  //
-  //   return exercises.keys.toList();
-  // }
+  List<String?> groupSetsByExercises(List<Set> sets) {
+    final exercises = groupBy(sets, (Set s) {
+      return objectBox.getExerciseById(s.exerciseId).name; // return the name of the set
+    });
+
+    List<String?> strings = exercises.keys.toList();
+
+    return strings;
+  }
 
 }

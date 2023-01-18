@@ -60,6 +60,9 @@ class ObjectBox {
   Exercise getExerciseById(int? exerciseId) {
     Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.id.equals(exerciseId!)).build();
     return query.find().first;
+    // barbell bench press, barbell incline bench press
+    // pull-up, alternate lateral pulldown
+    // barbell full zercher squat, barbell front squat
   }
 
 

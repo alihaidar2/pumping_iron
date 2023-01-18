@@ -203,6 +203,8 @@ class _ToolsPageState extends State<ToolsPage> {
                                             child: ElevatedButton(
                                               child: const Text("Submit"),
                                               onPressed: () {
+
+
                                                 addSet(
                                                     exerciseController.text,
                                                     int.parse(
@@ -264,45 +266,48 @@ class _ToolsPageState extends State<ToolsPage> {
     // }
   }
 
+  // barbell bench press, barbell incline bench press
+  // pull-up, alternate lateral pulldown
+  // barbell full zercher squat, barbell front squat
   void addSampleSets() {
     for (int i = 0; i < 4; i++) {
       Set set = Set(
-          exerciseId: objectBox.getExerciseByName("Deadlift").id,
+          exerciseId: objectBox.getExerciseByName("barbell deadlift").id,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 27));
       objectBox.setBox.put(set);
     }
     for (int i = 0; i < 4; i++) {
       Set set = Set(
-          exerciseId: objectBox.getExerciseByName("Pullups").id,
+          exerciseId: objectBox.getExerciseByName("pull-up").id,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 27));
       objectBox.setBox.put(set);
     }
     for (int i = 0; i < 4; i++) {
       Set set = Set(
-          exerciseId: objectBox.getExerciseByName("Bench Press").id,
+          exerciseId: objectBox.getExerciseByName("barbell bench press").id,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
     }
     for (int i = 0; i < 4; i++) {
       Set set = Set(
-          exerciseId: objectBox.getExerciseByName("Incline DB Press").id,
+          exerciseId: objectBox.getExerciseByName("barbell incline bench press").id,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
     }
     for (int i = 0; i < 4; i++) {
       Set set = Set(
-          exerciseId: objectBox.getExerciseByName("Squat").id,
+          exerciseId: objectBox.getExerciseByName("barbell full zercher squat").id,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
     }
     for (int i = 0; i < 4; i++) {
       Set set = Set(
-          exerciseId: objectBox.getExerciseByName("Leg Extensions").id,
+          exerciseId: objectBox.getExerciseByName("barbell front squat").id,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
@@ -317,7 +322,7 @@ class _ToolsPageState extends State<ToolsPage> {
   void addSet(String exercise, int reps, int year, int month, int day) {
     // create a new set
     DateTime date = DateTime(year, month, day);
-    Set newSet = new Set(exerciseId: objectBox.getExerciseByName("Incline DB Press").id, repetitions: reps, date: date);
+    Set newSet = new Set(exerciseId: objectBox.getExerciseByName(exercise).id, repetitions: reps, date: date);
     objectBox.setBox.put(newSet);
   }
 

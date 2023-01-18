@@ -75,7 +75,7 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
                 physics: const ScrollPhysics(),
                 shrinkWrap: true,
                 // itemCount: 20,
-                itemCount: exercises.length > 20 ? 20 : exercises.length,
+                itemCount: exercises.length > 500 ? 20 : exercises.length,
                 // this would be come the length of the list with the data
                 itemBuilder: (context, i) {
                   Exercise element = exercises.elementAt(i);
