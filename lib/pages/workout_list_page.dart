@@ -6,6 +6,7 @@ import '../main.dart';
 import '../models/set.dart';
 import 'package:flutter/material.dart';
 
+import '../models/workout.dart';
 import '../objectbox.g.dart';
 
 class WorkoutListPage extends StatefulWidget {
@@ -18,52 +19,68 @@ class WorkoutListPage extends StatefulWidget {
 class _WorkoutListPageState extends State<WorkoutListPage> {
   late String title;
   late List<Set> sets;
-  late List<Set> sets1;
-  late List<Set> sets2;
-  late List<Set> sets3;
+  late List<Workout> workouts;
   late List<List<Set>> setDates;
   late List<String> days;
   late var dates;
 
+  late String exerciseNameValue;
+  late String exerciseName;
+
+  final exerciseNameController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
-    title = "Workout Dates";
+    title = "Workouts";
     sets = objectBox.setBox.query().build().find().toList();
-
+    workouts = objectBox.workoutBox.query().build().find().toList();
+    exerciseName = "naem";
     // get a list of all dates, grouped by day
-    dates = groupSetsByDate(sets);
+    // dates = groupSetsByDate(sets);
   }
 
   @override
   Widget build(BuildContext context) {
+    print(exerciseName);
     // ListView of setDates
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
       ),
       body: ListView.builder(
-          itemCount: dates.length,
+          itemCount: workouts.length,
           itemBuilder: (BuildContext context, int index) {
-            var date = dates.elementAt(index);
+            var workout = workouts.elementAt(index);
             return ListTile(
-              title: Text(cleanDate(date)),
+              title: Text(workout.exerciseName.toString()),
               trailing: Icon(Icons.keyboard_arrow_right_sharp),
               //onTap calls When ListTile Taps
               onTap: () {
-                // Navigator pushes Workout for that date.
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WorkoutPage(title: title, year: date.year, month: date.month, day: date.day),
-                  ),
-                );
+                // // Navigator pushes Workout for that date.
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => WorkoutPage(title: title, year: date.year, month: date.month, day: date.day),
+                //   ),
+                // );
               },
             );
           }),
-    );
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await _displayTextInputDialog(context);
+          Workout workout = new Workout(exerciseName: exerciseName, dateTime: DateTime.now());
+          objectBox.workoutBox.put(workout);
+          setState(() {
+            workouts = objectBox.workoutBox.query().build().find().toList();
+          });
+        },
+        backgroundColor: Colors.teal,
+        child: const Icon(Icons.add_outlined),
+      ),
 
-    return Container();
+    );
   }
 
   Iterable<DateTime> groupSetsByDate(List<Set> sets) {
@@ -80,6 +97,44 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
 
   String cleanDate(DateTime date) {
     return date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString();
+  }
+
+  Future<void> _displayTextInputDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('TextField in Dialog'),
+            content: TextField(
+              onChanged: (value) {
+                setState(() {
+                  exerciseNameValue = value;
+                });
+              },
+              controller: exerciseNameController,
+              decoration: InputDecoration(hintText: "Text Field in Dialog"),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: Text('CANCEL'),
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              ElevatedButton(
+                child: Text('OK'),
+                onPressed: () {
+                  setState(() {
+                    exerciseName = exerciseNameValue;
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+            ],
+          );
+        });
   }
 
 }

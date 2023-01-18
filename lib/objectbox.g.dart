@@ -92,7 +92,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(6, 961841792392638427),
       name: 'Workout',
-      lastPropertyId: const IdUid(2, 4922720469006695430),
+      lastPropertyId: const IdUid(3, 3130250160772324140),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -104,6 +104,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(2, 4922720469006695430),
             name: 'dateTime',
             type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 3130250160772324140),
+            name: 'exerciseName',
+            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -250,22 +255,24 @@ ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (Workout object, fb.Builder fbb) {
-          fbb.startTable(3);
+          final exerciseNameOffset = fbb.writeString(object.exerciseName);
+          fbb.startTable(4);
           fbb.addInt64(0, object.id);
-          fbb.addInt64(1, object.dateTime?.millisecondsSinceEpoch);
+          fbb.addInt64(1, object.dateTime.millisecondsSinceEpoch);
+          fbb.addOffset(2, exerciseNameOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-          final dateTimeValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 6);
+
           final object = Workout(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              dateTime: dateTimeValue == null
-                  ? null
-                  : DateTime.fromMillisecondsSinceEpoch(dateTimeValue));
+              exerciseName: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              dateTime: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0)));
 
           return object;
         })
@@ -324,4 +331,8 @@ class Workout_ {
   /// see [Workout.dateTime]
   static final dateTime =
       QueryIntegerProperty<Workout>(_entities[2].properties[1]);
+
+  /// see [Workout.exerciseName]
+  static final exerciseName =
+      QueryStringProperty<Workout>(_entities[2].properties[2]);
 }

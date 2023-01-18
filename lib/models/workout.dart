@@ -6,14 +6,16 @@ import 'set.dart';
 @Entity()
 class Workout {
   int id;
-  final List<Set>? sets;
-  final DateTime? dateTime;
+  final String exerciseName;
+  final List<Set> sets;
+  final DateTime dateTime;
 
 
   Workout({
     this.id = 0,
+    required this.exerciseName,
     this.sets = const <Set>[],
-    this.dateTime,
+    required this.dateTime,
   });
 }
 

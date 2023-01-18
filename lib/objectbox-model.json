@@ -73,7 +73,7 @@
     },
     {
       "id": "6:961841792392638427",
-      "lastPropertyId": "2:4922720469006695430",
+      "lastPropertyId": "3:3130250160772324140",
       "name": "Workout",
       "properties": [
         {
@@ -86,6 +86,11 @@
           "id": "2:4922720469006695430",
           "name": "dateTime",
           "type": 10
+        },
+        {
+          "id": "3:3130250160772324140",
+          "name": "exerciseName",
+          "type": 9
         }
       ],
       "relations": []
