@@ -49,9 +49,20 @@ class ObjectBox {
 
   List<Exercise> getExercisesByTarget(String newValue) {
     Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.target.equals(newValue)).build();
-
     return query.find();
   }
+
+  Exercise getExerciseByName(String exerciseName) {
+    Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.name.equals(exerciseName)).build();
+    return query.find().first;
+  }
+
+  Exercise getExerciseById(int? exerciseId) {
+    Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.id.equals(exerciseId!)).build();
+    return query.find().first;
+  }
+
+
 
   // List<Exercise> getExercises() {return exerciseBox.getAll();}
 

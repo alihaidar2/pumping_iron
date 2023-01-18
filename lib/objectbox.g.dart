@@ -24,7 +24,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(4, 5556306561390569104),
       name: 'Set',
-      lastPropertyId: const IdUid(4, 8336198939918899926),
+      lastPropertyId: const IdUid(5, 5537666571580818873),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -43,9 +43,9 @@ final _entities = <ModelEntity>[
             type: 10,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 8336198939918899926),
-            name: 'exerciseName',
-            type: 9,
+            id: const IdUid(5, 5537666571580818873),
+            name: 'exerciseId',
+            type: 6,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -92,14 +92,19 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(6, 961841792392638427),
       name: 'Workout',
-      lastPropertyId: const IdUid(1, 4750836698139640229),
+      lastPropertyId: const IdUid(2, 4922720469006695430),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
             id: const IdUid(1, 4750836698139640229),
             name: 'id',
             type: 6,
-            flags: 1)
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 4922720469006695430),
+            name: 'dateTime',
+            type: 10,
+            flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
@@ -144,7 +149,8 @@ ModelDefinition getObjectBoxModel() {
         486059245126040481,
         4701210221314884544,
         5096502320797118806,
-        916299560753839574
+        916299560753839574,
+        8336198939918899926
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -161,12 +167,11 @@ ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (Set object, fb.Builder fbb) {
-          final exerciseNameOffset = fbb.writeString(object.exerciseName);
-          fbb.startTable(5);
+          fbb.startTable(6);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.repetitions);
           fbb.addInt64(2, object.date.millisecondsSinceEpoch);
-          fbb.addOffset(3, exerciseNameOffset);
+          fbb.addInt64(4, object.exerciseId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -176,8 +181,8 @@ ModelDefinition getObjectBoxModel() {
 
           final object = Set(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              exerciseName: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
+              exerciseId: const fb.Int64Reader()
+                  .vTableGetNullable(buffer, rootOffset, 12),
               repetitions: const fb.Int64Reader()
                   .vTableGetNullable(buffer, rootOffset, 6),
               date: DateTime.fromMillisecondsSinceEpoch(
@@ -245,17 +250,22 @@ ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (Workout object, fb.Builder fbb) {
-          fbb.startTable(2);
+          fbb.startTable(3);
           fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.dateTime?.millisecondsSinceEpoch);
           fbb.finish(fbb.endTable());
           return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
+          final dateTimeValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 6);
           final object = Workout(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              dateTime: dateTimeValue == null
+                  ? null
+                  : DateTime.fromMillisecondsSinceEpoch(dateTimeValue));
 
           return object;
         })
@@ -276,9 +286,9 @@ class Set_ {
   /// see [Set.date]
   static final date = QueryIntegerProperty<Set>(_entities[0].properties[2]);
 
-  /// see [Set.exerciseName]
-  static final exerciseName =
-      QueryStringProperty<Set>(_entities[0].properties[3]);
+  /// see [Set.exerciseId]
+  static final exerciseId =
+      QueryIntegerProperty<Set>(_entities[0].properties[3]);
 }
 
 /// [Exercise] entity fields to define ObjectBox queries.
@@ -310,4 +320,8 @@ class Exercise_ {
 class Workout_ {
   /// see [Workout.id]
   static final id = QueryIntegerProperty<Workout>(_entities[2].properties[0]);
+
+  /// see [Workout.dateTime]
+  static final dateTime =
+      QueryIntegerProperty<Workout>(_entities[2].properties[1]);
 }

@@ -151,7 +151,7 @@ class MainPage extends StatelessWidget {
                 () {
               List<Set> sets = objectBox.setBox.getAll();
               Set set = Set(
-                  exerciseName: 'Rows',
+                  exerciseId: objectBox.getExerciseByName("Rows").id,
                   repetitions: Random().nextInt(8),
                   date: DateTime.now());
               objectBox.setBox.put(set);
@@ -161,7 +161,7 @@ class MainPage extends StatelessWidget {
             onPressed: () {
               List<Set> sets = objectBox.setBox.getAll();
               Set set = Set(
-                  exerciseName: 'Deadlift',
+                  exerciseId: objectBox.getExerciseByName("Deadlift").id,
                   repetitions: Random().nextInt(6),
                   date: DateTime.now());
               objectBox.setBox.put(set);

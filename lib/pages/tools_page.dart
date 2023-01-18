@@ -253,56 +253,56 @@ class _ToolsPageState extends State<ToolsPage> {
   }
 
   void deleteSelectedSets() {
-    Query<Set> query = objectBox.setBox
-        .query(
-          Set_.exerciseName.equals("Deadlift"),
-        )
-        .build();
-    List<Set> sets = query.find();
-    for (Set set in sets) {
-      objectBox.setBox.remove(set.id);
-    }
+    // Query<Set> query = objectBox.setBox
+    //     .query(
+    //       Set_.exerciseId.equals(objectBox.getExerciseByName("Deadlift").id),
+    //     )
+    //     .build();
+    // List<Set> sets = query.find();
+    // for (Set set in sets) {
+    //   objectBox.setBox.remove(set.id);
+    // }
   }
 
   void addSampleSets() {
     for (int i = 0; i < 4; i++) {
       Set set = Set(
-          exerciseName: "Deadlift",
+          exerciseId: objectBox.getExerciseByName("Deadlift").id,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 27));
       objectBox.setBox.put(set);
     }
     for (int i = 0; i < 4; i++) {
       Set set = Set(
-          exerciseName: "Pullups",
+          exerciseId: objectBox.getExerciseByName("Pullups").id,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 27));
       objectBox.setBox.put(set);
     }
     for (int i = 0; i < 4; i++) {
       Set set = Set(
-          exerciseName: "Bench Press",
+          exerciseId: objectBox.getExerciseByName("Bench Press").id,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
     }
     for (int i = 0; i < 4; i++) {
       Set set = Set(
-          exerciseName: "Incline DB Press",
+          exerciseId: objectBox.getExerciseByName("Incline DB Press").id,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
     }
     for (int i = 0; i < 4; i++) {
       Set set = Set(
-          exerciseName: "Squat",
+          exerciseId: objectBox.getExerciseByName("Squat").id,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
     }
     for (int i = 0; i < 4; i++) {
       Set set = Set(
-          exerciseName: "Leg Extensions",
+          exerciseId: objectBox.getExerciseByName("Leg Extensions").id,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
@@ -317,7 +317,7 @@ class _ToolsPageState extends State<ToolsPage> {
   void addSet(String exercise, int reps, int year, int month, int day) {
     // create a new set
     DateTime date = DateTime(year, month, day);
-    Set newSet = new Set(exerciseName: exercise, repetitions: reps, date: date);
+    Set newSet = new Set(exerciseId: objectBox.getExerciseByName("Incline DB Press").id, repetitions: reps, date: date);
     objectBox.setBox.put(newSet);
   }
 

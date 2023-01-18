@@ -7,10 +7,21 @@ import 'set.dart';
 class Workout {
   int id;
   final List<Set>? sets;
+  final DateTime? dateTime;
 
 
   Workout({
     this.id = 0,
     this.sets = const <Set>[],
+    this.dateTime,
   });
 }
+
+
+// So a Workout will just be an entry into your Workout Plan
+// So your Workout Plan is going to have a Split
+// A Split will have list of sets
+
+// Expected workout:
+// When you are setting up the Workout, you will chose
+// the sets and reps for each one.

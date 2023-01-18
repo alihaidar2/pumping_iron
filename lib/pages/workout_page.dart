@@ -34,7 +34,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
     // filter to the sets for the day
     sets = sets.where((element) => element.date.year == widget.year && element.date.month == widget.month && element.date.day == widget.day).toList();
-    exerciseNames = groupSetsByExercises(sets);
+    // exerciseNames = groupSetsByExercises(sets);
+    exerciseNames = ['Deadlift', 'Pullups'];
   }
 
   @override
@@ -49,7 +50,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
           Text(widget.year.toString()+"/"+widget.month.toString()+"/"+widget.day.toString()),
           Expanded(
             child: ListView.builder(
-              itemCount: exerciseNames.length,
+              // itemCount: exerciseNames.length,
+              itemCount: 2,
               itemBuilder: (context, index) {
                 return ExerciseEntry(name: exerciseNames[index], year: widget.year, month: widget.month, day: widget.day);
               },
@@ -62,7 +64,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
         onPressed: () {
           List<Set> sets = objectBox.setBox.getAll();
           Set set = Set(
-              exerciseName: 'Deadlift',
+              exerciseId: objectBox.getExerciseByName("Deadlift").id,
               repetitions: Random().nextInt(6),
               date: DateTime.now());
           objectBox.setBox.put(set);
@@ -75,12 +77,13 @@ class _WorkoutPageState extends State<WorkoutPage> {
     );
   }
 
-  List<String> groupSetsByExercises(List<Set> sets) {
-    final exercises = groupBy(sets, (Set s) {
-      return s.exerciseName;
-    });
-
-    return exercises.keys.toList();
-  }
+  // this isnt gonna exist anymore -- wont need to
+  // List<String> groupSetsByExercises(List<Set> sets) {
+  //   final exercises = groupBy(sets, (Set s) {
+  //     return s.exerciseName;
+  //   });
+  //
+  //   return exercises.keys.toList();
+  // }
 
 }
