@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pumping_iron/pages/test_page.dart';
+import 'package:pumping_iron/pages/old_workout_page.dart';
 import 'package:pumping_iron/pages/workout_page.dart';
 import '../main.dart';
 import '../models/set.dart';
@@ -53,24 +54,24 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
           itemBuilder: (BuildContext context, int index) {
             var workout = workouts.elementAt(index);
             return ListTile(
-              title: Text(workout.exerciseName.toString()),
+              title: Text(workout.workoutName),
               trailing: Icon(Icons.keyboard_arrow_right_sharp),
               //onTap calls When ListTile Taps
               onTap: () {
                 // // Navigator pushes Workout for that date.
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => WorkoutPage(title: title, year: date.year, month: date.month, day: date.day),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WorkoutPage(workoutId: workout.id, dateTime: workout.dateTime,),
+                  ),
+                );
               },
             );
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await _displayTextInputDialog(context);
-          Workout workout = new Workout(exerciseName: exerciseName, dateTime: DateTime.now());
+          Workout workout = new Workout(dateTime: DateTime.now(), workoutName: '');
           objectBox.workoutBox.put(workout);
           setState(() {
             workouts = objectBox.workoutBox.query().build().find().toList();
@@ -87,7 +88,6 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
     final dates = groupBy(sets, (Set s) {
       // this needs to group by day month and year not just date
       // I'll just have to reform the date
-
       // create date from sd.date.day
       return s.date;
     });
@@ -100,6 +100,8 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
   }
 
   Future<void> _displayTextInputDialog(BuildContext context) async {
+    // will have to find a way to use this to create a workout too
+    // either a separate one or do the same thing with a different case
     return showDialog(
         context: context,
         builder: (context) {

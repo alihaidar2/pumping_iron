@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:pumping_iron/pages/test_page.dart';
 import 'package:pumping_iron/pages/tools_page.dart';
 import 'package:pumping_iron/pages/workout_list_page.dart';
-import 'package:pumping_iron/pages/workout_page.dart';
+import 'package:pumping_iron/pages/old_workout_page.dart';
 import 'package:pumping_iron/widgets/ExerciseEntry.dart';
 
 // import 'package:pump_that_iron/models/set.dart' as sett;

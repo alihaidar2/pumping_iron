@@ -5,7 +5,7 @@ import 'package:objectbox/objectbox.dart';
 import 'package:pumping_iron/models/set.dart';
 import 'package:pumping_iron/pages/exercise_list_page.dart';
 import 'package:pumping_iron/pages/home_page.dart';
-import 'package:pumping_iron/pages/workout_page.dart';
+import 'package:pumping_iron/pages/old_workout_page.dart';
 import 'package:pumping_iron/services/objectbox.dart';
 
 import 'models/exercise.dart';
@@ -134,7 +134,7 @@ class MainPage extends StatelessWidget {
         TextButton(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const WorkoutPage(title: 'Workout Page', year: 0, month: 0, day: 0);
+                return const OldWorkoutPage(title: 'Workout Page', year: 0, month: 0, day: 0);
               }));
             },
             child: const Text("To Workout Page (WIP)")),
@@ -152,6 +152,7 @@ class MainPage extends StatelessWidget {
               List<Set> sets = objectBox.setBox.getAll();
               Set set = Set(
                   exerciseId: objectBox.getExerciseByName("Rows").id,
+                  workoutId: null,
                   repetitions: Random().nextInt(8),
                   date: DateTime.now());
               objectBox.setBox.put(set);
@@ -162,6 +163,7 @@ class MainPage extends StatelessWidget {
               List<Set> sets = objectBox.setBox.getAll();
               Set set = Set(
                   exerciseId: objectBox.getExerciseByName("Deadlift").id,
+                  workoutId: null,
                   repetitions: Random().nextInt(6),
                   date: DateTime.now());
               objectBox.setBox.put(set);

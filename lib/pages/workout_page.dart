@@ -1,91 +1,63 @@
-import 'dart:math';
-
-import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pumping_iron/objectbox.g.dart';
 
 import '../main.dart';
-import '../models/exercise.dart';
 import '../models/set.dart';
-import '../globals.dart' as globals;
-import '../objectbox.g.dart';
-import '../widgets/ExerciseEntry.dart';
+
 
 class WorkoutPage extends StatefulWidget {
-  const WorkoutPage({Key? key, required this.title, required this.year,required this.month,required this.day}) : super(key: key);
-  final String title;
-  final int year;
-  final int month;
-  final int day;
-  // final dynamic dates;
+  const WorkoutPage({Key? key, required this.workoutId, required this.dateTime}) : super(key: key);
+  // WORKOUT PAGE IS A LIST OF SETS
+  // I need all of the sets on this day which is why I use the DateTime
+  final int workoutId;
+  final DateTime dateTime;
 
   @override
   State<WorkoutPage> createState() => _WorkoutPageState();
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
-  late List<String?> exerciseNames;
+  late int workoutId;
+  late DateTime dateTime;
   late List<Set> sets;
 
   @override
   void initState() {
     super.initState();
-    sets = objectBox.setBox.query().build().find().toList();
+    // get all of the exercises on this date
+    Query<Set> query = objectBox.setBox.query(
+      // Set_.exerciseId.equals(widget.exerciseId) &
+        Set_.workoutId.equals(widget.workoutId)
+    ).build();
 
-    // filter to the sets for the day
-    sets = sets.where((element) => element.date.year == widget.year && element.date.month == widget.month && element.date.day == widget.day).toList();
-    exerciseNames = groupSetsByExercises(sets);
-    // exerciseNames = ['Deadlift', 'Pullups'];
+    // can either make it so that
+    // it gets me all of the exercices on a certain day OR
+    // make sure the exercises/sets added have the EXACT SAME DATETIME
+    sets = query.find();
+
+    // fix this to make it get all sets with a workoutid and on this day
+    // sets = objectBox.setBox.query(Set_.date.equals(widget.dateTime)).build().find().toList();
+
   }
+
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Column(
-        children: [
-          Text(widget.year.toString()+"/"+widget.month.toString()+"/"+widget.day.toString()),
-          Expanded(
-            child: ListView.builder(
-              // itemCount: exerciseNames.length,
-              itemCount: 2,
-              itemBuilder: (context, index) {
-                return ExerciseEntry(name: exerciseNames[index]!, year: widget.year, month: widget.month, day: widget.day);
-              },
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          List<Set> sets = objectBox.setBox.getAll();
-          Set set = Set(
-              exerciseId: objectBox.getExerciseByName("Deadlift").id,
-              repetitions: Random().nextInt(6),
-              date: DateTime.now());
-          objectBox.setBox.put(set);
-          // sets = sets.where((element) => element.date.year == widget.year && element.date.month == widget.month && element.date.day == widget.day).toList();
-          setState(() {
-          });
-        },
+      appBar: AppBar(),
+      body: ListView.builder(
+          itemCount: sets.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Card(child: Text(sets.elementAt(index)..toString()));
 
-      ),
+          }),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        // need to find out how to get the workoutId and date from instance
+        Set newSet = Set(exerciseId: 2, repetitions: 12, workoutId: widget.workoutId, date: widget.dateTime);
+        objectBox.setBox.put(newSet);
+        setState(() {});
+
+      },),
     );
   }
-
-  // this isnt gonna exist anymore -- wont need to
-  List<String?> groupSetsByExercises(List<Set> sets) {
-    final exercises = groupBy(sets, (Set s) {
-      return objectBox.getExerciseById(s.exerciseId).name; // return the name of the set
-    });
-
-    List<String?> strings = exercises.keys.toList();
-
-    return strings;
-  }
-
 }
