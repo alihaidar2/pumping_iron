@@ -265,7 +265,7 @@ class _ToolsPageState extends State<ToolsPage> {
     for (int i = 0; i < 4; i++) {
       Set set = Set(
           exerciseId: objectBox.getExerciseByName("barbell deadlift").id,
-          workoutId: null,
+          workoutId: 3,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 27));
       objectBox.setBox.put(set);
@@ -273,7 +273,7 @@ class _ToolsPageState extends State<ToolsPage> {
     for (int i = 0; i < 4; i++) {
       Set set = Set(
           exerciseId: objectBox.getExerciseByName("pull-up").id,
-          workoutId: null,
+          workoutId: 3,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 27));
       objectBox.setBox.put(set);
@@ -281,7 +281,7 @@ class _ToolsPageState extends State<ToolsPage> {
     for (int i = 0; i < 4; i++) {
       Set set = Set(
           exerciseId: objectBox.getExerciseByName("barbell bench press").id,
-          workoutId: null,
+          workoutId: 3,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
@@ -289,7 +289,7 @@ class _ToolsPageState extends State<ToolsPage> {
     for (int i = 0; i < 4; i++) {
       Set set = Set(
           exerciseId: objectBox.getExerciseByName("barbell incline bench press").id,
-          workoutId: null,
+          workoutId: 3,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
@@ -297,7 +297,7 @@ class _ToolsPageState extends State<ToolsPage> {
     for (int i = 0; i < 4; i++) {
       Set set = Set(
           exerciseId: objectBox.getExerciseByName("barbell full zercher squat").id,
-          workoutId: null,
+          workoutId: 3,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
@@ -305,7 +305,7 @@ class _ToolsPageState extends State<ToolsPage> {
     for (int i = 0; i < 4; i++) {
       Set set = Set(
           exerciseId: objectBox.getExerciseByName("barbell front squat").id,
-          workoutId: null,
+          workoutId: 3,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);

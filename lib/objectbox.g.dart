@@ -213,8 +213,7 @@ ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (Exercise object, fb.Builder fbb) {
-          final nameOffset =
-              object.name == null ? null : fbb.writeString(object.name!);
+          final nameOffset = fbb.writeString(object.name);
           final targetOffset =
               object.target == null ? null : fbb.writeString(object.target!);
           final bodyPartOffset = object.bodyPart == null
@@ -226,24 +225,23 @@ ModelDefinition getObjectBoxModel() {
           final gifUrlOffset =
               object.gifUrl == null ? null : fbb.writeString(object.gifUrl!);
           fbb.startTable(7);
-          fbb.addInt64(0, object.id ?? 0);
+          fbb.addInt64(0, object.id);
           fbb.addOffset(1, nameOffset);
           fbb.addOffset(2, targetOffset);
           fbb.addOffset(3, bodyPartOffset);
           fbb.addOffset(4, equipmentOffset);
           fbb.addOffset(5, gifUrlOffset);
           fbb.finish(fbb.endTable());
-          return object.id ?? 0;
+          return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
           final object = Exercise(
-              id: const fb.Int64Reader()
-                  .vTableGetNullable(buffer, rootOffset, 4),
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               name: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 6),
+                  .vTableGet(buffer, rootOffset, 6, ''),
               target: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 8),
               bodyPart: const fb.StringReader(asciiOptimization: true)

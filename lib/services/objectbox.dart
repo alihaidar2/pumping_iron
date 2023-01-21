@@ -43,13 +43,9 @@ class ObjectBox {
     return setBox.getAll();
   }
 
+  // Exercise Methods
   List<Exercise> getAllExercises() {
     return exerciseBox.getAll();
-  }
-
-  List<Exercise> getExercisesByTarget(String newValue) {
-    Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.target.equals(newValue)).build();
-    return query.find();
   }
 
   Exercise getExerciseByName(String exerciseName) {
@@ -57,12 +53,14 @@ class ObjectBox {
     return query.find().first;
   }
 
-  Exercise getExerciseById(int? exerciseId) {
-    Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.id.equals(exerciseId!)).build();
+  Exercise getExerciseById(int exerciseId) {
+    Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.id.equals(exerciseId)).build();
     return query.find().first;
-    // barbell bench press, barbell incline bench press
-    // pull-up, alternate lateral pulldown
-    // barbell full zercher squat, barbell front squat
+  }
+
+  List<Exercise> getExercisesByTarget(String newValue) {
+    Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.target.equals(newValue)).build();
+    return query.find();
   }
 
 

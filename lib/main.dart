@@ -133,9 +133,9 @@ class MainPage extends StatelessWidget {
         ),
         TextButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const OldWorkoutPage(title: 'Workout Page', year: 0, month: 0, day: 0);
-              }));
+              // Navigator.push(context, MaterialPageRoute(builder: (context) {
+              //   return const OldWorkoutPage(title: 'Workout Page', year: 0, month: 0, day: 0);
+              // }));
             },
             child: const Text("To Workout Page (WIP)")),
         TextButton(

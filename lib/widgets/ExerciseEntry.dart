@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pumping_iron/models/exercise.dart';
 import 'package:pumping_iron/models/set.dart';
 import 'package:flutter/material.dart';
 
@@ -19,12 +20,13 @@ extension StringCasingExtension on String {
 
 class ExerciseEntry extends StatefulWidget {
   final String name;
-  final int year;
-  final int month;
-  final int day;
+  final int exerciseId;
+  final int? year;
+  final int? month;
+  final int? day;
 
 
-  ExerciseEntry({required this.name, required this.year,required this.month,required this.day});
+  ExerciseEntry({required this.name, required this.exerciseId, this.year, this.month, this.day});
 
   @override
   State<ExerciseEntry> createState() => _ExerciseEntryState();
@@ -32,7 +34,8 @@ class ExerciseEntry extends StatefulWidget {
 
 class _ExerciseEntryState extends State<ExerciseEntry> {
   List<Set> sets = [];
-  late var exercises;
+  late List<Exercise> exercises;
+  late String exerciseName;
 
 
   @override
@@ -40,12 +43,10 @@ class _ExerciseEntryState extends State<ExerciseEntry> {
     super.initState();
 
     // gets all sets for a single exercise
-    sets = objectBox.setBox.query().build().find().toList();
-    String exerciseName = widget.name;
-    sets = sets.where((element) => element.exerciseId == objectBox.getExerciseByName(widget.name).id && element.date.year == widget.year && element.date.month == widget.month && element.date.day == widget.day).toList();
+    sets = objectBox.setBox.query(Set_.exerciseId.equals(widget.exerciseId)).build().find().toList();
 
-    // list of sets for a single exercise
-    exercises = groupSetsByExerciseName(sets);
+    // get Exercise Name from query to database with set(0)
+    exerciseName = objectBox.getExerciseById(sets.elementAt(0).id).name;
 
   }
 
@@ -58,12 +59,11 @@ class _ExerciseEntryState extends State<ExerciseEntry> {
           children: [
             Flexible(
               child: Row(
-                // crossAxisAlignment: CrossAxisAlignment.start, // for left side
                 children: [
                   // Exercise name
                   Expanded(
                     child: Text(
-                      widget.name!,
+                      exerciseName,
                       style: const TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -94,12 +94,10 @@ class _ExerciseEntryState extends State<ExerciseEntry> {
     );
   }
 
-  Iterable<String?> groupSetsByExerciseName(List<Set> sets) {
-    final dates = groupBy(sets, (Set s) {
-      return objectBox.getExerciseById(s.exerciseId).name;
+  groupSetsByExercise(List<Set> sets) {
+    final exercises = groupBy(sets, (Set s) {
+      return objectBox.getExerciseById(s.exerciseId!).id;
     });
-
-    return dates.keys;
+    return exercises;
   }
-
 }

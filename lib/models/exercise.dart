@@ -3,8 +3,8 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class Exercise {
-  int? id;
-  final String? name;
+  int id;
+  final String name;
   final String? target;
   final String? bodyPart;
   final String? equipment;
