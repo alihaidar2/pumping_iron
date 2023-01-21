@@ -6,6 +6,7 @@ import 'package:pumping_iron/models/workout.dart';
 
 import '../models/exercise.dart';
 import '../models/set.dart';
+import '../models/workout_plan.dart';
 import '../objectbox.g.dart';
 import '../globals.dart' as globals;
 import 'api_service.dart';
@@ -17,6 +18,7 @@ class ObjectBox {
   late final Box<Set> setBox; // holds all the sets ever --> filter by date
   late final Box<Exercise> exerciseBox; // holds all the sets ever --> filter by date
   late final Box<Workout> workoutBox;
+  late final Box<WorkoutPlan> workoutPlanBox;
   // late final Box<Exercise> exerciseBox;
 
   late final Stream<Query<Set>> setStream;
@@ -25,6 +27,7 @@ class ObjectBox {
     setBox = Box<Set>(store);
     exerciseBox = Box<Exercise>(store);
     workoutBox = Box<Workout>(store);
+    workoutPlanBox = Box<WorkoutPlan>(store);
     // exerciseBox = Box<Exercise>(store);
 
     // final qBuilder = setBox.query();
@@ -39,29 +42,41 @@ class ObjectBox {
     return ObjectBox._create(store);
   }
 
-  List<Set> getSets() {
-    return setBox.getAll();
-  }
+
+  // Set methods
+  List<Set> getAllSets() => setBox.getAll();
+  void addSet(Set set) => setBox.put(set);
 
   // Exercise Methods
-  List<Exercise> getAllExercises() {
-    return exerciseBox.getAll();
-  }
-
+  List<Exercise> getAllExercises() => exerciseBox.getAll();
   Exercise getExerciseByName(String exerciseName) {
     Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.name.equals(exerciseName)).build();
     return query.find().first;
   }
-
   Exercise getExerciseById(int exerciseId) {
     Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.id.equals(exerciseId)).build();
     return query.find().first;
   }
-
   List<Exercise> getExercisesByTarget(String newValue) {
     Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.target.equals(newValue)).build();
     return query.find();
   }
+
+  // Workout methods
+  List<Workout> getAllWorkouts() => workoutBox.getAll();
+  void addWorkout(Workout workout) => workoutBox.put(workout);
+
+
+  // Workout Plan methods
+  List<WorkoutPlan> getAllWorkoutPlans() => workoutPlanBox.getAll();
+  void addWorkoutPlan(WorkoutPlan workoutPlan) => workoutPlanBox.put(workoutPlan);
+
+
+  // dev
+  void deleteAllSets() => setBox.removeAll();
+  void deleteAllWorkouts() => workoutBox.removeAll();
+  void deleteAllWorkoutPlans() => workoutPlanBox.removeAll();
+
 
 
 

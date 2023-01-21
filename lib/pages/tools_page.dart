@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
+import 'package:pumping_iron/models/workout.dart';
+import 'package:pumping_iron/models/workout_plan.dart';
 import 'package:pumping_iron/widgets/ExerciseEntry.dart';
 import 'package:pumping_iron/widgets/Tool.dart';
 
@@ -91,7 +93,7 @@ class _ToolsPageState extends State<ToolsPage> {
                     child: Center(
                         child: TextButton(
                             child: Text('Add Sample Sets'),
-                            onPressed: addSampleSets)),
+                            onPressed:() {} )), //addSampleSets
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 2.5, bottom: 2.5),
@@ -242,6 +244,18 @@ class _ToolsPageState extends State<ToolsPage> {
                             child: Text('Pull Exercises to Database'),
                             onPressed: pullExercisesToDatabase)),
                   ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 2.5,bottom: 2.5,),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.grey[400],
+                    ),
+                    child: Center(
+                        child: TextButton(
+                            child: Text('Add Sample Workout Plan - PPL'),
+                            onPressed: addSampleWorkoutPlan)),
+                  ),
                 ],
               ),
             ),
@@ -261,11 +275,11 @@ class _ToolsPageState extends State<ToolsPage> {
   // barbell bench press, barbell incline bench press
   // pull-up, alternate lateral pulldown
   // barbell full zercher squat, barbell front squat
-  void addSampleSets() {
+  void addSampleSets(int wIdPush,int wIdPull,int wIdLegs,) {
     for (int i = 0; i < 4; i++) {
       Set set = Set(
           exerciseId: objectBox.getExerciseByName("barbell deadlift").id,
-          workoutId: 3,
+          workoutId: wIdPull,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 27));
       objectBox.setBox.put(set);
@@ -273,7 +287,7 @@ class _ToolsPageState extends State<ToolsPage> {
     for (int i = 0; i < 4; i++) {
       Set set = Set(
           exerciseId: objectBox.getExerciseByName("pull-up").id,
-          workoutId: 3,
+          workoutId: wIdPull,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 27));
       objectBox.setBox.put(set);
@@ -281,7 +295,7 @@ class _ToolsPageState extends State<ToolsPage> {
     for (int i = 0; i < 4; i++) {
       Set set = Set(
           exerciseId: objectBox.getExerciseByName("barbell bench press").id,
-          workoutId: 3,
+          workoutId: wIdPush,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
@@ -289,7 +303,7 @@ class _ToolsPageState extends State<ToolsPage> {
     for (int i = 0; i < 4; i++) {
       Set set = Set(
           exerciseId: objectBox.getExerciseByName("barbell incline bench press").id,
-          workoutId: 3,
+          workoutId: wIdPush,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
@@ -297,7 +311,7 @@ class _ToolsPageState extends State<ToolsPage> {
     for (int i = 0; i < 4; i++) {
       Set set = Set(
           exerciseId: objectBox.getExerciseByName("barbell full zercher squat").id,
-          workoutId: 3,
+          workoutId: wIdLegs,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
@@ -305,7 +319,7 @@ class _ToolsPageState extends State<ToolsPage> {
     for (int i = 0; i < 4; i++) {
       Set set = Set(
           exerciseId: objectBox.getExerciseByName("barbell front squat").id,
-          workoutId: 3,
+          workoutId: wIdLegs,
           repetitions: Random().nextInt(6),
           date: new DateTime(2012, 2, 28));
       objectBox.setBox.put(set);
@@ -313,6 +327,19 @@ class _ToolsPageState extends State<ToolsPage> {
 
     var box = objectBox.exerciseBox.getAll();
     print('object');
+
+  }
+
+  void addSampleWorkoutPlan() {
+    WorkoutPlan workoutPlan = new WorkoutPlan(workoutPlanName: "PPL");
+    Workout workoutPush = new Workout(workoutName: "Push", dateTime: DateTime.now());
+    Workout workoutPull = new Workout(workoutName: "Pull", dateTime: DateTime.now());
+    Workout workoutLegs = new Workout(workoutName: "Legs", dateTime: DateTime.now());
+    objectBox.addWorkoutPlan(workoutPlan);
+    objectBox.addWorkout(workoutPush);
+    objectBox.addWorkout(workoutPull);
+    objectBox.addWorkout(workoutLegs);
+    addSampleSets(workoutPush.id, workoutPull.id, workoutLegs.id);
 
   }
 

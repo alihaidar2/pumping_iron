@@ -17,6 +17,7 @@ import 'package:objectbox_sync_flutter_libs/objectbox_sync_flutter_libs.dart';
 import 'models/exercise.dart';
 import 'models/set.dart';
 import 'models/workout.dart';
+import 'models/workout_plan.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -97,7 +98,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(6, 961841792392638427),
       name: 'Workout',
-      lastPropertyId: const IdUid(4, 1963022136019425243),
+      lastPropertyId: const IdUid(6, 5839159965790888048),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -111,9 +112,33 @@ final _entities = <ModelEntity>[
             type: 10,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 1963022136019425243),
+            id: const IdUid(6, 5839159965790888048),
             name: 'workoutName',
             type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(7, 7192100301774156387),
+      name: 'WorkoutPlan',
+      lastPropertyId: const IdUid(3, 5055568532696296241),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 4982694375115880028),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 2509365183196101651),
+            name: 'workoutPlanName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 5055568532696296241),
+            name: 'dateTime',
+            type: 10,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -140,7 +165,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(6, 961841792392638427),
+      lastEntityId: const IdUid(7, 7192100301774156387),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -161,7 +186,9 @@ ModelDefinition getObjectBoxModel() {
         5096502320797118806,
         916299560753839574,
         8336198939918899926,
-        3130250160772324140
+        3130250160772324140,
+        1963022136019425243,
+        8393486859481218004
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -263,10 +290,10 @@ ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (Workout object, fb.Builder fbb) {
           final workoutNameOffset = fbb.writeString(object.workoutName);
-          fbb.startTable(5);
+          fbb.startTable(7);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.dateTime.millisecondsSinceEpoch);
-          fbb.addOffset(3, workoutNameOffset);
+          fbb.addOffset(5, workoutNameOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -277,9 +304,41 @@ ModelDefinition getObjectBoxModel() {
           final object = Workout(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               workoutName: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
+                  .vTableGet(buffer, rootOffset, 14, ''),
               dateTime: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0)));
+
+          return object;
+        }),
+    WorkoutPlan: EntityDefinition<WorkoutPlan>(
+        model: _entities[3],
+        toOneRelations: (WorkoutPlan object) => [],
+        toManyRelations: (WorkoutPlan object) => {},
+        getId: (WorkoutPlan object) => object.id,
+        setId: (WorkoutPlan object, int id) {
+          object.id = id;
+        },
+        objectToFB: (WorkoutPlan object, fb.Builder fbb) {
+          final workoutPlanNameOffset = fbb.writeString(object.workoutPlanName);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, workoutPlanNameOffset);
+          fbb.addInt64(2, object.dateTime?.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final dateTimeValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
+          final object = WorkoutPlan(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              workoutPlanName: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              dateTime: dateTimeValue == null
+                  ? null
+                  : DateTime.fromMillisecondsSinceEpoch(dateTimeValue));
 
           return object;
         })
@@ -346,4 +405,19 @@ class Workout_ {
   /// see [Workout.workoutName]
   static final workoutName =
       QueryStringProperty<Workout>(_entities[2].properties[2]);
+}
+
+/// [WorkoutPlan] entity fields to define ObjectBox queries.
+class WorkoutPlan_ {
+  /// see [WorkoutPlan.id]
+  static final id =
+      QueryIntegerProperty<WorkoutPlan>(_entities[3].properties[0]);
+
+  /// see [WorkoutPlan.workoutPlanName]
+  static final workoutPlanName =
+      QueryStringProperty<WorkoutPlan>(_entities[3].properties[1]);
+
+  /// see [WorkoutPlan.dateTime]
+  static final dateTime =
+      QueryIntegerProperty<WorkoutPlan>(_entities[3].properties[2]);
 }

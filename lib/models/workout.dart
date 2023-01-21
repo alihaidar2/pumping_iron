@@ -10,7 +10,6 @@ class Workout {
   final List<Set> sets;
   final DateTime dateTime;
 
-
   Workout({
     this.id = 0,
     required this.workoutName,

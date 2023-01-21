@@ -19,31 +19,20 @@ class WorkoutListPage extends StatefulWidget {
 
 class _WorkoutListPageState extends State<WorkoutListPage> {
   late String title;
-  late List<Set> sets;
   late List<Workout> workouts;
-  late List<List<Set>> setDates;
-  late List<String> days;
-  late var dates;
-
-  late String exerciseNameValue;
-  late String exerciseName;
 
   final exerciseNameController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    title = "Workouts";
-    sets = objectBox.setBox.query().build().find().toList();
-    workouts = objectBox.workoutBox.query().build().find().toList();
-    exerciseName = "naem";
-    // get a list of all dates, grouped by day
-    // dates = groupSetsByDate(sets);
+    title = "Workout List";
+    workouts = objectBox.getAllWorkouts();
+
   }
 
   @override
   Widget build(BuildContext context) {
-    print(exerciseName);
     // ListView of setDates
     return Scaffold(
       appBar: AppBar(
@@ -69,14 +58,7 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
             );
           }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await _displayTextInputDialog(context);
-          Workout workout = new Workout(dateTime: DateTime.now(), workoutName: '');
-          objectBox.workoutBox.put(workout);
-          setState(() {
-            workouts = objectBox.workoutBox.query().build().find().toList();
-          });
-        },
+        onPressed: () async { },
         backgroundColor: Colors.teal,
         child: const Icon(Icons.add_outlined),
       ),
@@ -99,44 +81,44 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
     return date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString();
   }
 
-  Future<void> _displayTextInputDialog(BuildContext context) async {
-    // will have to find a way to use this to create a workout too
-    // either a separate one or do the same thing with a different case
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('TextField in Dialog'),
-            content: TextField(
-              onChanged: (value) {
-                setState(() {
-                  exerciseNameValue = value;
-                });
-              },
-              controller: exerciseNameController,
-              decoration: InputDecoration(hintText: "Text Field in Dialog"),
-            ),
-            actions: <Widget>[
-              ElevatedButton(
-                child: Text('CANCEL'),
-                onPressed: () {
-                  setState(() {
-                    Navigator.pop(context);
-                  });
-                },
-              ),
-              ElevatedButton(
-                child: Text('OK'),
-                onPressed: () {
-                  setState(() {
-                    exerciseName = exerciseNameValue;
-                    Navigator.pop(context);
-                  });
-                },
-              ),
-            ],
-          );
-        });
-  }
+  // Future<void> _displayTextInputDialog(BuildContext context) async {
+  //   // will have to find a way to use this to create a workout too
+  //   // either a separate one or do the same thing with a different case
+  //   return showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: Text('TextField in Dialog'),
+  //           content: TextField(
+  //             onChanged: (value) {
+  //               setState(() {
+  //                 exerciseNameValue = value;
+  //               });
+  //             },
+  //             controller: exerciseNameController,
+  //             decoration: InputDecoration(hintText: "Text Field in Dialog"),
+  //           ),
+  //           actions: <Widget>[
+  //             ElevatedButton(
+  //               child: Text('CANCEL'),
+  //               onPressed: () {
+  //                 setState(() {
+  //                   Navigator.pop(context);
+  //                 });
+  //               },
+  //             ),
+  //             ElevatedButton(
+  //               child: Text('OK'),
+  //               onPressed: () {
+  //                 setState(() {
+  //                   exerciseName = exerciseNameValue;
+  //                   Navigator.pop(context);
+  //                 });
+  //               },
+  //             ),
+  //           ],
+  //         );
+  //       });
+  // }
 
 }

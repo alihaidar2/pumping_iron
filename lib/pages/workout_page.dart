@@ -23,7 +23,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
   late int workoutId;
   late DateTime dateTime;
   late List<Set> sets;
-  late var exercises;
+  late Map<String, List<Set>> exercises;
 
   @override
   void initState() {
@@ -46,33 +46,22 @@ class _WorkoutPageState extends State<WorkoutPage> {
       body: ListView.builder(
           itemCount: exercises.length,
           itemBuilder: (BuildContext context, int index) {
-            // Exercise exercise = exercises.elementAt(index);
-            // I only want the exercise entries to show
-            // the exercises that are part of this workoutId
-            // return Text("index.toString()");
-            return ExerciseEntry(name: "exercise.name!", exerciseId: 2, day: 19, month:1, year:2023);
+
+            List<Set> sets = exercises.values.elementAt(index);
+            // return Text(exerciseName);
+            return ExerciseEntry(exerciseId: sets.first.exerciseId!, workoutId: widget.workoutId,);
 
           }),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        // need to find out how to get the workoutId and date from instance
-        Set newSet = Set(exerciseId: 2, repetitions: 12, workoutId: widget.workoutId, date: widget.dateTime);
-        objectBox.setBox.put(newSet);
-        setState(() {
-          sets = objectBox.setBox.query(
-              Set_.workoutId.equals(widget.workoutId)
-          ).build().find();
-        });
-
-      },),
+      floatingActionButton: FloatingActionButton(onPressed: () {},),
     );
   }
 
-  Iterable<String?> groupSetsByExerciseName(List<Set> sets) {
+  Map<String, List<Set>> groupSetsByExerciseName(List<Set> sets) {
     final dates = groupBy(sets, (Set s) {
       return objectBox.getExerciseById(s.exerciseId!).name;
     });
 
-    return dates.keys;
+    return dates;
   }
 
 }

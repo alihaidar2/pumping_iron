@@ -19,14 +19,17 @@ extension StringCasingExtension on String {
 }
 
 class ExerciseEntry extends StatefulWidget {
-  final String name;
+  // The card has to generate data either for
+  // 1. A single workout (workoutId)
+  // 2. A specific day (Y/M/D)
   final int exerciseId;
+  final int workoutId;
   final int? year;
   final int? month;
   final int? day;
 
 
-  ExerciseEntry({required this.name, required this.exerciseId, this.year, this.month, this.day});
+  ExerciseEntry({required this.exerciseId, required this.workoutId, this.year, this.month, this.day});
 
   @override
   State<ExerciseEntry> createState() => _ExerciseEntryState();
@@ -43,10 +46,13 @@ class _ExerciseEntryState extends State<ExerciseEntry> {
     super.initState();
 
     // gets all sets for a single exercise
-    sets = objectBox.setBox.query(Set_.exerciseId.equals(widget.exerciseId)).build().find().toList();
+    sets = objectBox.setBox.query(
+        Set_.exerciseId.equals(widget.exerciseId) &
+        Set_.workoutId.equals(widget.workoutId)
+    ).build().find().toList();
 
     // get Exercise Name from query to database with set(0)
-    exerciseName = objectBox.getExerciseById(sets.elementAt(0).id).name;
+    exerciseName = objectBox.getExerciseById(sets.elementAt(0).exerciseId!).name;
 
   }
 
