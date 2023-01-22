@@ -56,6 +56,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
     );
   }
 
+  // returns map of exercise names with all of their sets in a list
   Map<String, List<Set>> groupSetsByExerciseName(List<Set> sets) {
     final dates = groupBy(sets, (Set s) {
       return objectBox.getExerciseById(s.exerciseId!).name;

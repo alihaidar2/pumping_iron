@@ -64,18 +64,41 @@ class ObjectBox {
 
   // Workout methods
   List<Workout> getAllWorkouts() => workoutBox.getAll();
+  // List<Workout> getWorkoutsByWorkoutId(int workoutId) {
+  //   Query<Exercise> query = workoutBox.query(
+  //       Workout_.workoutId.equals(wourkoutId)).build();
+  //   return query.find();
+  // }
+  Workout getWorkoutByName(String name) {
+    Query<Workout> query = objectBox.workoutBox.query(
+        Workout_.workoutName.equals(name)
+    ).build();
+    return query.find().first;
+  }
   void addWorkout(Workout workout) => workoutBox.put(workout);
 
 
   // Workout Plan methods
   List<WorkoutPlan> getAllWorkoutPlans() => workoutPlanBox.getAll();
   void addWorkoutPlan(WorkoutPlan workoutPlan) => workoutPlanBox.put(workoutPlan);
+  WorkoutPlan getWorkoutPlanByName(String name) {
+    Query<WorkoutPlan> query = objectBox.workoutPlanBox.query(
+      WorkoutPlan_.workoutPlanName.equals(name)
+    ).build();
+    return query.find().first;
+  }
 
 
   // dev
   void deleteAllSets() => setBox.removeAll();
   void deleteAllWorkouts() => workoutBox.removeAll();
   void deleteAllWorkoutPlans() => workoutPlanBox.removeAll();
+
+  void deleteEverything() {
+    deleteAllSets();
+    deleteAllWorkouts();
+    deleteAllWorkoutPlans();
+  }
 
 
 

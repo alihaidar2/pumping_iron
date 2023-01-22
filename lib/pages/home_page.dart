@@ -6,6 +6,7 @@ import 'package:pumping_iron/pages/test_page.dart';
 import 'package:pumping_iron/pages/tools_page.dart';
 import 'package:pumping_iron/pages/workout_list_page.dart';
 import 'package:pumping_iron/pages/old_workout_page.dart';
+import 'package:pumping_iron/pages/workout_plan_list_page.dart';
 import 'package:pumping_iron/widgets/ExerciseEntry.dart';
 
 // import 'package:pump_that_iron/models/set.dart' as sett;
@@ -33,7 +34,9 @@ class _HomePageState extends State<HomePage> {
   // create static list of 8 Widgets
   static List<Widget> _widgetOptions = <Widget>[
     TestPage(title: 'Test'),
-    WorkoutListPage(),
+    // gonna return the Workout Plan pages
+    WorkoutPlanListPage(),
+    // WorkoutListPage(),
     ExerciseListPage(title: 'Exercises'),
     ToolsPage(title: 'Tools'),
   ];
@@ -47,18 +50,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // query to return all exercise names
-    // PropertyQuery<String> query =
-    //     objectBox.setBox.query().build().property(Set_.exerciseName);
-    // query.distinct = true;
-    // List<String> exerciseNames = query.find();
-    // query.close();
-    //
-    // // gets all sets
-    // Query<Set> query2 = objectBox.setBox.query().build();
-    // List<Set> sets = query2.find();
-    // query2.close();
-
     return Scaffold(
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),

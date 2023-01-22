@@ -78,7 +78,7 @@
     },
     {
       "id": "6:961841792392638427",
-      "lastPropertyId": "6:5839159965790888048",
+      "lastPropertyId": "7:7179020313060430105",
       "name": "Workout",
       "properties": [
         {
@@ -96,6 +96,11 @@
           "id": "6:5839159965790888048",
           "name": "workoutName",
           "type": 9
+        },
+        {
+          "id": "7:7179020313060430105",
+          "name": "workoutPlanId",
+          "type": 6
         }
       ],
       "relations": []

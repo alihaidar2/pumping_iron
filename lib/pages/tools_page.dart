@@ -65,7 +65,7 @@ class _ToolsPageState extends State<ToolsPage> {
                     child: Center(
                         child: TextButton(
                             child: Text('Delete All Sets'),
-                            onPressed: deleteAllSets)),
+                            onPressed: objectBox.deleteAllSets)),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 2.5, bottom: 2.5),
@@ -77,7 +77,7 @@ class _ToolsPageState extends State<ToolsPage> {
                     child: Center(
                         child: TextButton(
                             child: Text('Delete All Workouts'),
-                            onPressed: deleteAllWorkouts)),
+                            onPressed: objectBox.deleteAllWorkouts)),
                   ),
                   Container(
                     margin: const EdgeInsets.only(
@@ -256,6 +256,18 @@ class _ToolsPageState extends State<ToolsPage> {
                             child: Text('Add Sample Workout Plan - PPL'),
                             onPressed: addSampleWorkoutPlan)),
                   ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 2.5,bottom: 2.5,),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.red[400],
+                    ),
+                    child: Center(
+                        child: TextButton(
+                            child: Text('Delete Everything'),
+                            onPressed: objectBox.deleteEverything)),
+                  ),
                 ],
               ),
             ),
@@ -264,13 +276,21 @@ class _ToolsPageState extends State<ToolsPage> {
   }
 
   // function to delete all sets
-  void deleteAllSets() {
-    objectBox.setBox.removeAll();
-  }
-
-  void deleteAllWorkouts() {
+  // void deleteAllSets() {
+  //   objectBox.setBox.removeAll();
+  // }
+  //
+  // void deleteAllWorkouts() {
+  //   objectBox.workoutBox.removeAll();
+  // }
+  void deleteAllWorkoutPlans() {
     objectBox.workoutBox.removeAll();
   }
+  // void deleteEverything() {
+  //   deleteAllSets();
+  //   deleteAllWorkouts();
+  //   deleteAllWorkoutPlans();
+  // }
 
   // barbell bench press, barbell incline bench press
   // pull-up, alternate lateral pulldown
@@ -332,13 +352,20 @@ class _ToolsPageState extends State<ToolsPage> {
 
   void addSampleWorkoutPlan() {
     WorkoutPlan workoutPlan = new WorkoutPlan(workoutPlanName: "PPL");
-    Workout workoutPush = new Workout(workoutName: "Push", dateTime: DateTime.now());
-    Workout workoutPull = new Workout(workoutName: "Pull", dateTime: DateTime.now());
-    Workout workoutLegs = new Workout(workoutName: "Legs", dateTime: DateTime.now());
     objectBox.addWorkoutPlan(workoutPlan);
+    workoutPlan = objectBox.getWorkoutPlanByName("PPL");
+
+
+    Workout workoutPush = new Workout(workoutName: "Push", dateTime: DateTime.now(), workoutPlanId: workoutPlan.id);
+    Workout workoutPull = new Workout(workoutName: "Pull", dateTime: DateTime.now(), workoutPlanId: workoutPlan.id);
+    Workout workoutLegs = new Workout(workoutName: "Legs", dateTime: DateTime.now(), workoutPlanId: workoutPlan.id);
     objectBox.addWorkout(workoutPush);
     objectBox.addWorkout(workoutPull);
     objectBox.addWorkout(workoutLegs);
+    workoutPush = objectBox.getWorkoutByName("Push");
+    workoutPull = objectBox.getWorkoutByName("Pull");
+    workoutLegs = objectBox.getWorkoutByName("Legs");
+
     addSampleSets(workoutPush.id, workoutPull.id, workoutLegs.id);
 
   }

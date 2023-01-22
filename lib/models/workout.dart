@@ -7,11 +7,13 @@ import 'set.dart';
 class Workout {
   int id;
   final String workoutName;
+  final int workoutPlanId;
   final List<Set> sets;
   final DateTime dateTime;
 
   Workout({
     this.id = 0,
+    required this.workoutPlanId,
     required this.workoutName,
     this.sets = const <Set>[],
     required this.dateTime,

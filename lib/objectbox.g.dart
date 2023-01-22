@@ -98,7 +98,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(6, 961841792392638427),
       name: 'Workout',
-      lastPropertyId: const IdUid(6, 5839159965790888048),
+      lastPropertyId: const IdUid(7, 7179020313060430105),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -115,6 +115,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(6, 5839159965790888048),
             name: 'workoutName',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 7179020313060430105),
+            name: 'workoutPlanId',
+            type: 6,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -290,10 +295,11 @@ ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (Workout object, fb.Builder fbb) {
           final workoutNameOffset = fbb.writeString(object.workoutName);
-          fbb.startTable(7);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.dateTime.millisecondsSinceEpoch);
           fbb.addOffset(5, workoutNameOffset);
+          fbb.addInt64(6, object.workoutPlanId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -303,6 +309,8 @@ ModelDefinition getObjectBoxModel() {
 
           final object = Workout(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              workoutPlanId:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0),
               workoutName: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 14, ''),
               dateTime: DateTime.fromMillisecondsSinceEpoch(
@@ -405,6 +413,10 @@ class Workout_ {
   /// see [Workout.workoutName]
   static final workoutName =
       QueryStringProperty<Workout>(_entities[2].properties[2]);
+
+  /// see [Workout.workoutPlanId]
+  static final workoutPlanId =
+      QueryIntegerProperty<Workout>(_entities[2].properties[3]);
 }
 
 /// [WorkoutPlan] entity fields to define ObjectBox queries.
