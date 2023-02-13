@@ -8,12 +8,12 @@ extension StringCasingExtension on String {
   String toTitleCase() => replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalized()).join(' ');
 }
 
-class ExerciseRow extends StatelessWidget {
+class ExerciseCard extends StatelessWidget {
   String? name;
   String? target;
   String? gifUrl;
 
-  ExerciseRow(this.name, this.target, this.gifUrl);
+  ExerciseCard(this.name, this.target, this.gifUrl);
 
   @override
   Widget build(BuildContext context) {

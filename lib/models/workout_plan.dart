@@ -1,5 +1,4 @@
 import 'package:objectbox/objectbox.dart';
-import 'package:pumping_iron/widgets/workout.dart';
 
 import 'set.dart';
 

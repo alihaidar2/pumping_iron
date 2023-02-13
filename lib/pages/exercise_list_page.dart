@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 import '../models/exercise.dart';
 import '../services/api_service.dart';
-import '../widgets/ExerciseRow.dart';
-import '../globals.dart' as globals;
+import '../widgets/exercise_card.dart';
 
 class ExerciseListPage extends StatefulWidget {
   const ExerciseListPage({Key? key, required this.title}) : super(key: key);
@@ -29,7 +28,7 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
     // initialize api service
     ApiService apiService = ApiService();
     endpoint = 'exercises';
-    futureExercises = apiService.get(endpoint: endpoint);
+    futureExercises = apiService.getExercises(endpoint: endpoint);
 
     exercises = objectBox.getAllExercises();
   }
@@ -79,12 +78,11 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
                 // this would be come the length of the list with the data
                 itemBuilder: (context, i) {
                   Exercise element = exercises.elementAt(i);
-                  return ExerciseRow(
+                  return ExerciseCard(
                       element.name, element.target, element.gifUrl);
-                }),
+                })
           ],
-        )
-    );
+        ));
   }
 }
 

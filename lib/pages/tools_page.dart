@@ -7,7 +7,6 @@ import 'package:http/http.dart';
 import 'package:pumping_iron/models/workout.dart';
 import 'package:pumping_iron/models/workout_plan.dart';
 import 'package:pumping_iron/widgets/ExerciseEntry.dart';
-import 'package:pumping_iron/widgets/Tool.dart';
 
 // import 'package:pump_that_iron/models/set.dart' as sett;
 // import 'package:pump_that_iron/globals.dart' as globals;
@@ -380,10 +379,15 @@ class _ToolsPageState extends State<ToolsPage> {
 
   Future<void> pullExercisesToDatabase() async {
     ApiService apiService = ApiService();
+    // List<String> bodyParts = await apiService.getBodyParts();
     String endpoint = 'exercises';
-    var futureExercises = apiService.get(endpoint: endpoint);
+    var futureExercises = apiService.getExercises(endpoint: endpoint);
     List<Exercise> list = await futureExercises;
-    for (Exercise exercise in list) {
+    List reducedExercises = list.where((element) => element.equipment == "barbell").toList();
+    //"barbell", "cable", "dumbbell", "ez barbell", "kettlebell", "olympic barbell"
+
+
+    for (Exercise exercise in reducedExercises) {
       objectBox.exerciseBox.put(exercise);
     }
     // objectBox.exerciseBox.putMany(list.toList());

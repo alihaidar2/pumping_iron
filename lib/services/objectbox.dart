@@ -57,13 +57,27 @@ class ObjectBox {
     Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.id.equals(exerciseId)).build();
     return query.find().first;
   }
-  List<Exercise> getExercisesByTarget(String newValue) {
-    Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.target.equals(newValue)).build();
+  List<Exercise> getExercisesByTarget(String target) {
+    Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.target.equals(target)).build();
+    return query.find();
+  }
+  List<Exercise> getExercisesByEquipment(String equipment) {
+    Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.equipment.equals(equipment)).build();
+    return query.find();
+  }
+  List<Exercise> getExercisesByBodyPart(String bodyPart) {
+    Query<Exercise> query = objectBox.exerciseBox.query(Exercise_.bodyPart.equals(bodyPart)).build();
     return query.find();
   }
 
   // Workout methods
   List<Workout> getAllWorkouts() => workoutBox.getAll();
+  List<Workout> getWorkoutsByWorkoutPlanId(int id) {
+    Query<Workout> query = objectBox.workoutBox.query(
+        Workout_.workoutPlanId.equals(id)
+    ).build();
+    return query.find();
+  }
   // List<Workout> getWorkoutsByWorkoutId(int workoutId) {
   //   Query<Exercise> query = workoutBox.query(
   //       Workout_.workoutId.equals(wourkoutId)).build();
@@ -75,6 +89,7 @@ class ObjectBox {
     ).build();
     return query.find().first;
   }
+
   void addWorkout(Workout workout) => workoutBox.put(workout);
 
 
@@ -91,10 +106,12 @@ class ObjectBox {
 
   // dev
   void deleteAllSets() => setBox.removeAll();
+  void deleteAllExercises() => exerciseBox.removeAll();
   void deleteAllWorkouts() => workoutBox.removeAll();
   void deleteAllWorkoutPlans() => workoutPlanBox.removeAll();
 
   void deleteEverything() {
+    deleteAllExercises();
     deleteAllSets();
     deleteAllWorkouts();
     deleteAllWorkoutPlans();

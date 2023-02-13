@@ -1,12 +1,9 @@
 import 'package:objectbox/objectbox.dart';
 
-import 'exercise.dart';
-
-// @Sync()
 @Entity()
 class Set {
   int id;
-  final int? exerciseId; // later will be an exercise
+  final int? exerciseId;
   final int? workoutId;
   final int? repetitions;
   final DateTime date;

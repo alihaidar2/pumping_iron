@@ -5,7 +5,6 @@ import 'package:objectbox/objectbox.dart';
 import 'package:pumping_iron/models/set.dart';
 import 'package:pumping_iron/pages/exercise_list_page.dart';
 import 'package:pumping_iron/pages/home_page.dart';
-import 'package:pumping_iron/pages/old_workout_page.dart';
 import 'package:pumping_iron/services/objectbox.dart';
 
 import 'models/exercise.dart';

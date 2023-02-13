@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:pumping_iron/pages/test_page.dart';
 import 'package:pumping_iron/pages/tools_page.dart';
 import 'package:pumping_iron/pages/workout_list_page.dart';
-import 'package:pumping_iron/pages/old_workout_page.dart';
 import 'package:pumping_iron/pages/workout_plan_list_page.dart';
 import 'package:pumping_iron/widgets/ExerciseEntry.dart';
 
@@ -31,12 +30,9 @@ class _HomePageState extends State<HomePage> {
 
   int _selectedIndex = 0;
 
-  // create static list of 8 Widgets
+  // create static list of 3 Widgets
   static List<Widget> _widgetOptions = <Widget>[
-    TestPage(title: 'Test'),
-    // gonna return the Workout Plan pages
     WorkoutPlanListPage(),
-    // WorkoutListPage(),
     ExerciseListPage(title: 'Exercises'),
     ToolsPage(title: 'Tools'),
   ];
@@ -53,7 +49,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
-          // child: const Text("_widgetOptions.elementAt(_selectedIndex)"),
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
@@ -65,10 +60,10 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.calendar_today),
               label: 'Workouts',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.list),
-              label: 'Exercises',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.list),
+            //   label: 'Exercises',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
               label: 'Tools',
